@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.detroitlabs.icandigit.fragments.DigFragment;
+import com.detroitlabs.icandigit.fragments.InventoryFragment;
 
 public class MainActivity extends Activity {
 
@@ -50,7 +51,14 @@ public class MainActivity extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
-        if (id = R.id.)
+        if (id == R.id.inventory) {
+            InventoryFragment inventoryFragment = new InventoryFragment();
+            FragmentTransaction mFragmentTransaction = getFragmentManager().beginTransaction();
+
+            mFragmentTransaction.replace(R.id.map, inventoryFragment);
+            mFragmentTransaction.addToBackStack(null);
+            mFragmentTransaction.commit();
+        }
         return super.onOptionsItemSelected(item);
     }
 }
