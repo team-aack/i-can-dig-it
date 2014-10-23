@@ -1,6 +1,7 @@
 package com.detroitlabs.icandigit.fragments;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
@@ -27,7 +28,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class DigFragment extends Fragment implements LocationListener{
 
-    private MapView mapView;
+    private GoogleMap googleMap;
     private LocationManager locationManager;
     private String locationProvider;
     private final int minTime = 1000;
@@ -36,8 +37,6 @@ public class DigFragment extends Fragment implements LocationListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        MapsInitializer.initialize(getActivity());
-
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
 
         setUpMapIfNeeded();
@@ -61,10 +60,10 @@ public class DigFragment extends Fragment implements LocationListener{
     @Override
     public void onResume() {
         super.onResume();
-//        googleMap.setMyLocationEnabled(true);
-//        googleMap.getUiSettings().setMyLocationButtonEnabled(false);
-//        googleMap.getUiSettings().setAllGesturesEnabled(false);
-//        googleMap.getUiSettings().setZoomControlsEnabled(false);
+        googleMap.setMyLocationEnabled(true);
+        googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+        googleMap.getUiSettings().setAllGesturesEnabled(false);
+        googleMap.getUiSettings().setZoomControlsEnabled(false);
 
         locationManager.requestLocationUpdates(locationProvider, minTime, minDistance, this);
     }
@@ -78,38 +77,38 @@ public class DigFragment extends Fragment implements LocationListener{
     }
 
     private void setUpMapIfNeeded() {
-//        // Do a null check to confirm that we have not already instantiated the map.
-//        if (googleMap == null) {
-//            googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
-//                    .getMap();
-//            // Check if we were successful in obtaining the map.
-//            if (googleMap != null) {
-//                // The Map is verified. It is now safe to manipulate the map.
-//            }
-//        }
+        // Do a null check to confirm that we have not already instantiated the map.
+        if (googleMap == null) {
+            googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
+                    .getMap();
+            // Check if we were successful in obtaining the map.
+            if (googleMap != null) {
+                // The Map is verified. It is now safe to manipulate the map.
+            }
+        }
 
     }
 
     private void centerMapOnMyLocation() {
 
-//        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-//        Criteria criteria = new Criteria();
-//
-//        Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
-//        if (location != null)
-//        {
-//            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-//                    new LatLng(location.getLatitude(), location.getLongitude()), (float)18.5));
-//
-//            CameraPosition cameraPosition = new CameraPosition.Builder()
-//                    .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
-//                    .zoom(18)                  // Sets the zoom
-//                    .bearing(0)                // Sets the orientation of the camera to east
-//                    .tilt(0)                  // Sets the tilt of the camera to 30 degrees
-//                    .build();                  // Creates a CameraPosition from the builder
-//            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-//
-//        }
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+
+        Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+        if (location != null)
+        {
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                    new LatLng(location.getLatitude(), location.getLongitude()), (float)18.5));
+
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
+                    .zoom(18)                  // Sets the zoom
+                    .bearing(0)                // Sets the orientation of the camera to east
+                    .tilt(0)                  // Sets the tilt of the camera to 30 degrees
+                    .build();                  // Creates a CameraPosition from the builder
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        }
     }
 
     private void initializeLocationManager() {
@@ -138,14 +137,14 @@ public class DigFragment extends Fragment implements LocationListener{
     public void onLocationChanged(Location location) {
 
         Log.d("called", "onLocationChanged");
-//
-//
-//        //when the location changes, update the map by zooming to the location
-//        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(),location.getLongitude()));
-//        googleMap.moveCamera(center);
-//
-//        CameraUpdate zoom=CameraUpdateFactory.zoomTo((float)18.5);
-//        googleMap.animateCamera(zoom);
+
+
+        //when the location changes, update the map by zooming to the location
+        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(),location.getLongitude()));
+        googleMap.moveCamera(center);
+
+        CameraUpdate zoom=CameraUpdateFactory.zoomTo((float)18.5);
+        googleMap.animateCamera(zoom);
     }
 
     @Override

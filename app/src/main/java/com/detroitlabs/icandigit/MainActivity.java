@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.detroitlabs.icandigit.fragments.DigFragment;
 import com.detroitlabs.icandigit.fragments.InventoryFragment;
@@ -24,8 +25,7 @@ public class MainActivity extends Activity {
         digFragment = new DigFragment();
 
         // Commit the transaction
-        fragmentTransaction.replace(R.id.fragment_container, digFragment);
-        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.add(R.id.fragment_container, digFragment);
         fragmentTransaction.commit();
     }
 
@@ -53,12 +53,8 @@ public class MainActivity extends Activity {
             return true;
         }
         if (id == R.id.inventory) {
-            InventoryFragment inventoryFragment = new InventoryFragment();
-            FragmentTransaction mFragmentTransaction = getFragmentManager().beginTransaction();
+        // open inventory activity
 
-            mFragmentTransaction.replace(R.id.fragment_container, inventoryFragment);
-            mFragmentTransaction.addToBackStack(null);
-            mFragmentTransaction.commit();
         }
         return super.onOptionsItemSelected(item);
     }

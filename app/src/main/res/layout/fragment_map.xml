@@ -5,15 +5,11 @@
     android:layout_height="match_parent"
     android:screenOrientation="portrait">
 
-    <com.google.android.gms.maps.MapView
+    <fragment
         android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <!--<fragment-->
-        <!--android:id="@+id/map"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:name="com.google.android.gms.maps.MapFragment"/>-->
+        android:layout_height="match_parent"
+        android:name="com.google.android.gms.maps.MapFragment"/>
     <Button
         android:id="@+id/button_digit"
         android:layout_alignParentBottom="true"
