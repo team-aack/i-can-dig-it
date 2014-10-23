@@ -98,7 +98,7 @@ public class DigFragment extends Fragment implements LocationListener{
                     new LatLng(location.getLatitude(), location.getLongitude()), (float)18.5));
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                  // Sets the center of the map to location user
+                    .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
                     .zoom(18)                  // Sets the zoom
                     .bearing(0)                // Sets the orientation of the camera to east
                     .tilt(0)                  // Sets the tilt of the camera to 30 degrees
