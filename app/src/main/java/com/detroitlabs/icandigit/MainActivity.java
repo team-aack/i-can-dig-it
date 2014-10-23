@@ -7,9 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.detroitlabs.icandigit.fragments.DigFragment;
-import com.detroitlabs.icandigit.objects.Treasure;
-
-import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 

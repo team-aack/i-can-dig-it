@@ -4,8 +4,10 @@ import android.app.Fragment;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,29 +15,29 @@ import android.widget.Button;
 
 import com.detroitlabs.icandigit.R;
 import com.detroitlabs.icandigit.services.InventoryService;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
-public class DigFragment extends Fragment {
+public class DigFragment extends Fragment implements LocationListener{
 
     private GoogleMap googleMap;
-    private Location location;
-    private LatLng myLatLng;
+    private LocationManager locationManager;
+    private String locationProvider;
+    private final int minTime = 1000;
+    private final int minDistance = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_map, null);
 
         setUpMapIfNeeded();
 
-        //makes it so that our map displays terrain
-        //googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-
-        centerMapOnMyLocation();
+        initializeLocationManager();
 
         Button button = (Button) rootView.findViewById(R.id.button_digit);
         button.setOnClickListener(new View.OnClickListener()
@@ -51,6 +53,26 @@ public class DigFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        googleMap.setMyLocationEnabled(true);
+        googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+        googleMap.getUiSettings().setAllGesturesEnabled(false);
+        googleMap.getUiSettings().setZoomControlsEnabled(false);
+
+        locationManager.requestLocationUpdates(locationProvider, minTime, minDistance, this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        /* Disable the my-location layer (this causes our LocationSource to be automatically deactivated.) */
+        googleMap.setMyLocationEnabled(false);
+        locationManager.removeUpdates(this);
+    }
+
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
         if (googleMap == null) {
@@ -59,9 +81,9 @@ public class DigFragment extends Fragment {
             // Check if we were successful in obtaining the map.
             if (googleMap != null) {
                 // The Map is verified. It is now safe to manipulate the map.
-
             }
         }
+
     }
 
     private void centerMapOnMyLocation() {
@@ -73,7 +95,7 @@ public class DigFragment extends Fragment {
         if (location != null)
         {
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                    new LatLng(location.getLatitude(), location.getLongitude()), 13));
+                    new LatLng(location.getLatitude(), location.getLongitude()), (float)18.5));
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
@@ -84,5 +106,56 @@ public class DigFragment extends Fragment {
             googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         }
+    }
+
+    private void initializeLocationManager() {
+
+        //get the location manager
+        locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+
+        //define the location manager criteria
+        Criteria criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_FINE);
+
+        locationProvider = locationManager.getBestProvider(criteria, false);
+
+        Location location = locationManager.getLastKnownLocation(locationProvider);
+
+
+        //initialize the location
+        if(location != null) {
+
+            onLocationChanged(location);
+        }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+        Log.d("called", "onLocationChanged");
+
+
+        //when the location changes, update the map by zooming to the location
+        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(),location.getLongitude()));
+        googleMap.moveCamera(center);
+
+        CameraUpdate zoom=CameraUpdateFactory.zoomTo((float)18.5);
+        googleMap.animateCamera(zoom);
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
     }
 }
