@@ -4,6 +4,7 @@
     <string name="app_name">I Can Dig It</string>
     <string name="action_settings">Settings</string>
 
+    <string name="you_found">You found:</string>
     <string name="treasure00">Gold</string>
     <string name="treasure01">Silver</string>
     <string name="treasure02">Rock</string>

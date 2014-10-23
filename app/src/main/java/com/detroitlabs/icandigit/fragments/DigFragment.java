@@ -1,6 +1,8 @@
 package com.detroitlabs.icandigit.fragments;
 
+import android.app.Dialog;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.detroitlabs.icandigit.R;
 import com.detroitlabs.icandigit.services.InventoryService;
@@ -72,6 +75,35 @@ public class DigFragment extends Fragment implements LocationListener{
                         (new MarkerOptions()
                                 .position(new LatLng(locationManager.getLastKnownLocation(locationProvider).getLatitude(),locationManager.getLastKnownLocation(locationProvider).getLongitude()))));
 
+        //This came from Android Developer Docs, but didn't work too well for me.
+//
+//                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//
+//
+//                // Create new fragments and transaction
+//                DugDialogFragment dugDialogFragment = new DugDialogFragment();
+//
+//                // Commit the transaction
+//                fragmentTransaction.add(R.id.fragment_container, dugDialogFragment);
+//                dugDialogFragment.show(fragmentTransaction, "not sure what this should be");
+////                fragmentTransaction.commit();
+
+
+                // Created a new Dialog
+                Dialog dialog = new Dialog(getActivity());
+
+// Set the title
+                dialog.setTitle(R.string.you_found);
+
+// inflate the layout
+                dialog.setContentView(R.layout.dialog_view);
+
+// Set the dialog text -- this is better done in the XML
+                TextView text = (TextView)dialog.findViewById(R.id.dialog_text_view);
+                text.setText("I can't tell you just...yet...because it's a secret! Yeah!");
+
+// Display the dialog
+                dialog.show();
             }
         });
 
