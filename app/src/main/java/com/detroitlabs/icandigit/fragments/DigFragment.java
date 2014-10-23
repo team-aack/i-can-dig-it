@@ -1,6 +1,7 @@
 package com.detroitlabs.icandigit.fragments;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
@@ -46,6 +47,23 @@ public class DigFragment extends Fragment implements LocationListener{
             public void onClick(View v)
             {
                 InventoryService.startDig();
+
+
+
+
+
+
+
+
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+
+
+                // Create new fragments and transaction
+                DugDialogFragment dugDialogFragment = new DugDialogFragment();
+
+                // Commit the transaction
+                fragmentTransaction.add(R.id.fragment_container, dugDialogFragment);
+                fragmentTransaction.commit();
 
             }
         });
