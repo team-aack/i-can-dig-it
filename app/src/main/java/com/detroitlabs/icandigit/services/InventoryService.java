@@ -11,21 +11,20 @@ import java.util.List;
 public class InventoryService {
 
     public static List<Treasure> itemInventory = new ArrayList<Treasure>();
+    public static Treasure freshTreasure;
 
     // Initiate a dig to find a new item
     public static void startDig() {
 
-        Treasure thingy = InventoryService.newItem();
+        freshTreasure = InventoryService.newItem();
 
-        System.out.println("************************\nFound: " + thingy.getItemType() + "\n");
+        // Console test
+        System.out.println("************************\nFound: " + freshTreasure.getItemType() + "\n");
         System.out.println("Inventory total: " + itemInventory.size());
-
         for (int i = 0; i < itemInventory.size(); i++) {
             Treasure t = itemInventory.get(i);
             System.out.println("x" + t.getItemAmount() + " " + t.getItemType());
         }
-
-        System.out.println("************************");
     }
 
     public static Treasure newItem(){
