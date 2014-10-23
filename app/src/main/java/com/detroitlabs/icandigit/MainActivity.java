@@ -24,7 +24,8 @@ public class MainActivity extends Activity {
         digFragment = new DigFragment();
 
         // Commit the transaction
-        fragmentTransaction.add(R.id.fragment_container, digFragment);
+        fragmentTransaction.replace(R.id.fragment_container, digFragment);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
@@ -55,7 +56,7 @@ public class MainActivity extends Activity {
             InventoryFragment inventoryFragment = new InventoryFragment();
             FragmentTransaction mFragmentTransaction = getFragmentManager().beginTransaction();
 
-            mFragmentTransaction.replace(R.id.map, inventoryFragment);
+            mFragmentTransaction.replace(R.id.fragment_container, inventoryFragment);
             mFragmentTransaction.addToBackStack(null);
             mFragmentTransaction.commit();
         }
