@@ -23,6 +23,7 @@
     <string name="treasure16">Henry Balanon</string>
 
     <string name="inventory_title">Inventory</string>
+    <string name="action_inventory">View Inventory</string>
 
 
 </resources>
