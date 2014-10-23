@@ -63,7 +63,8 @@ public class DigFragment extends Fragment implements LocationListener{
 
                 // Commit the transaction
                 fragmentTransaction.add(R.id.fragment_container, dugDialogFragment);
-                fragmentTransaction.commit();
+                dugDialogFragment.show(fragmentTransaction, "not sure what this should be");
+//                fragmentTransaction.commit();
 
             }
         });
