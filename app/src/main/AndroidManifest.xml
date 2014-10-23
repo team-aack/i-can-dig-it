@@ -28,6 +28,7 @@
             android:name=".InventoryActivity"
             android:label="@string/title_activity_inventory" >
         </activity>
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
