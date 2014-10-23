@@ -22,5 +22,7 @@
     <string name="treasure15">Harvey</string>
     <string name="treasure16">Henry Balanon</string>
 
+    <string name="inventory_title">Inventory</string>
+
 
 </resources>

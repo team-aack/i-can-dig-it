@@ -1,15 +1,18 @@
 package com.detroitlabs.icandigit.fragments;
 
-import com.detroitlabs.icandigit.objects.Treasure;
-import java.util.ArrayList;
+import android.app.Fragment;
+import android.os.Bundle;
+
+import com.detroitlabs.icandigit.R;
 
 /**
  * Created by aditishetty on 10/23/14.
  */
-public class InventoryFragment {
+public class InventoryFragment extends Fragment {
 
-    private ArrayList<Treasure> mTreasures;
-
-
-
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getActivity().setTitle(R.string.inventory_title);
+    }
 }
