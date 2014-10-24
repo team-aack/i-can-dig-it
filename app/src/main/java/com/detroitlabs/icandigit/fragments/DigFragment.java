@@ -3,7 +3,6 @@ package com.detroitlabs.icandigit.fragments;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -16,16 +15,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.detroitlabs.icandigit.InventoryActivity;
 import com.detroitlabs.icandigit.R;
 import com.detroitlabs.icandigit.services.InventoryService;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -69,17 +64,6 @@ public class DigFragment extends Fragment implements LocationListener{
             }
         });
 
-        inventoryButton = (Button) rootView.findViewById(R.id.button_inventory);
-        inventoryButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(getActivity(), InventoryActivity.class);
-                startActivity(intent);
-            }
-        });
-
         digButton = (Button) rootView.findViewById(R.id.button_digit);
         digButton.setOnClickListener(new View.OnClickListener()
         {
@@ -90,7 +74,8 @@ public class DigFragment extends Fragment implements LocationListener{
 
                 listOfHoleMarkers.add(googleMap.addMarker
                         (new MarkerOptions()
-                                .position(new LatLng(locationManager.getLastKnownLocation(locationProvider).getLatitude(),locationManager.getLastKnownLocation(locationProvider).getLongitude()))));
+                                .position(new LatLng(locationManager.getLastKnownLocation(locationProvider).getLatitude(),locationManager.getLastKnownLocation(locationProvider).getLongitude()))
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.your_hole))));
 
         //This came from Android Developer Docs, but didn't work too well for me.
 //
