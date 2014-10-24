@@ -32,7 +32,7 @@ public class InventoryService {
         Treasure newThing = null;
 
         // Select a new Treasure to add to the Inventory
-        int pickTreasure = (int) Math.floor(Math.random() * 10);
+        int pickTreasure = (int) Math.floor(Math.random() * 100);
         switch (pickTreasure) {
             case 0: newThing = new Treasure("Pork",1); break;
             case 1: newThing = new Treasure("Chicken",1); break;
