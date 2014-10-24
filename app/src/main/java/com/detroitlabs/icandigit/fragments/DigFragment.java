@@ -2,6 +2,7 @@ package com.detroitlabs.icandigit.fragments;
 
 import android.app.Dialog;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -70,11 +71,9 @@ public class DigFragment extends Fragment implements LocationListener{
         });
 
         inventoryButton = (Button) rootView.findViewById(R.id.button_inventory);
-        inventoryButton.setOnClickListener(new View.OnClickListener()
-        {
+        inventoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), InventoryActivity.class);
                 startActivity(intent);
             }
@@ -106,6 +105,18 @@ public class DigFragment extends Fragment implements LocationListener{
 ////                fragmentTransaction.commit();
 
 
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+
+                // Create new fragments and transaction
+                YouFoundFragment youFoundFragment = new YouFoundFragment();
+
+                // Commit the transaction
+                fragmentTransaction.add(R.id.fragment_container, youFoundFragment);
+                fragmentTransaction.commit();
+
+
+
+                //COMMENTING THIS OUT WHILE TESTING THE FRAGMENT
 //                // Created a new Dialog
 //                Dialog dialog = new Dialog(getActivity());
 //
