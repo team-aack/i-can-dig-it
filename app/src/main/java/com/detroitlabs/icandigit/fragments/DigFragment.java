@@ -24,14 +24,20 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 
 public class DigFragment extends Fragment implements LocationListener{
 
     private GoogleMap googleMap;
     private LocationManager locationManager;
     private String locationProvider;
-    private final int minTime = 1000;
-    private final int minDistance = 1;
+    private final int minTime = 1000; //time between userLocation updates in milliseconds
+    private final int minDistance = 1; //distance required to move to update userLocation
+    private ArrayList<Marker> listOfHoleMarkers = new ArrayList<Marker>();
+    private Button digButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,21 +48,32 @@ public class DigFragment extends Fragment implements LocationListener{
 
         initializeLocationManager();
 
-        Button button = (Button) rootView.findViewById(R.id.button_digit);
-        button.setOnClickListener(new View.OnClickListener()
+        googleMap.setMyLocationEnabled(true);
+        googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+        googleMap.getUiSettings().setAllGesturesEnabled(false);
+        googleMap.getUiSettings().setZoomControlsEnabled(false);
+
+        locationManager.requestLocationUpdates(locationProvider, minTime, minDistance, this);
+
+
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                return true;
+            }
+        });
+
+        digButton = (Button) rootView.findViewById(R.id.button_digit);
+        digButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 InventoryService.startDig();
 
-
-
-
-
-
-
-
+                listOfHoleMarkers.add(googleMap.addMarker
+                        (new MarkerOptions()
+                                .position(new LatLng(locationManager.getLastKnownLocation(locationProvider).getLatitude(),locationManager.getLastKnownLocation(locationProvider).getLongitude()))));
 
         //This came from Android Developer Docs, but didn't work too well for me.
 //
@@ -97,18 +114,12 @@ public class DigFragment extends Fragment implements LocationListener{
     public void onResume() {
         super.onResume();
 
-        googleMap.setMyLocationEnabled(true);
-        googleMap.getUiSettings().setMyLocationButtonEnabled(false);
-        googleMap.getUiSettings().setAllGesturesEnabled(false);
-        googleMap.getUiSettings().setZoomControlsEnabled(false);
-
-        locationManager.requestLocationUpdates(locationProvider, minTime, minDistance, this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        /* Disable the my-location layer (this causes our LocationSource to be automatically deactivated.) */
+        /* Disable the my-userLocation layer (this causes our LocationSource to be automatically deactivated.) */
         googleMap.setMyLocationEnabled(false);
         locationManager.removeUpdates(this);
     }
@@ -138,7 +149,7 @@ public class DigFragment extends Fragment implements LocationListener{
                     new LatLng(location.getLatitude(), location.getLongitude()), (float)18.5));
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
+                    .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to userLocation user
                     .zoom(18)                  // Sets the zoom
                     .bearing(0)                // Sets the orientation of the camera to east
                     .tilt(0)                  // Sets the tilt of the camera to 30 degrees
@@ -150,23 +161,23 @@ public class DigFragment extends Fragment implements LocationListener{
 
     private void initializeLocationManager() {
 
-        //get the location manager
+        //get the userLocation manager
         locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
 
 
-        //define the location manager criteria
+        //define the userLocation manager criteria
         Criteria criteria = new Criteria();
-        criteria.setAccuracy(Criteria.ACCURACY_FINE);
+        //criteria.setAccuracy(Criteria.ACCURACY_FINE);
 
         locationProvider = locationManager.getBestProvider(criteria, false);
 
-        Location location = locationManager.getLastKnownLocation(locationProvider);
+        Location userLocation = locationManager.getLastKnownLocation(locationProvider);
 
 
-        //initialize the location
-        if(location != null) {
+        //initialize the userLocation
+        if(userLocation != null) {
 
-            onLocationChanged(location);
+            onLocationChanged(userLocation);
         }
     }
 
@@ -176,7 +187,7 @@ public class DigFragment extends Fragment implements LocationListener{
         Log.d("called", "onLocationChanged");
 
 
-        //when the location changes, update the map by zooming to the location
+        //when the userLocation changes, update the map by zooming to the userLocation
         CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(),location.getLongitude()));
         googleMap.moveCamera(center);
 
