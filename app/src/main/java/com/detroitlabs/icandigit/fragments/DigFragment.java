@@ -38,6 +38,12 @@ public class DigFragment extends Fragment implements LocationListener{
     private ArrayList<Marker> listOfHoleMarkers = new ArrayList<Marker>();
     private Button digButton;
 
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
