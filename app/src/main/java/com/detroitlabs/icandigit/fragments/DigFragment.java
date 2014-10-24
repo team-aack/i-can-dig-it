@@ -17,10 +17,13 @@ import android.widget.TextView;
 
 import com.detroitlabs.icandigit.R;
 import com.detroitlabs.icandigit.services.InventoryService;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -43,7 +46,7 @@ public class DigFragment extends Fragment implements LocationListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View rootView = inflater.inflate(R.layout.fragment_map, null);
+        View rootView = inflater.inflate(R.layout.fragment_map, container, false);
 
         setUpMapIfNeeded();
 
@@ -114,6 +117,7 @@ public class DigFragment extends Fragment implements LocationListener{
         super.onResume();
 
 
+        locationManager.requestLocationUpdates(locationProvider, minTime, minDistance, this);
     }
 
     @Override

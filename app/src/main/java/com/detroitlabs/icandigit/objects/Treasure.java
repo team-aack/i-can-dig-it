@@ -24,4 +24,9 @@ public class Treasure {
     public void setItemAmount(int itemAmount) {
         this.itemAmount = itemAmount;
     }
+
+    @Override
+    public String toString() {
+        return itemType + " : "+itemAmount;
+    }
 }
