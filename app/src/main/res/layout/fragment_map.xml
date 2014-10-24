@@ -13,14 +13,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/button_inventory"
-        android:background="@drawable/ic_treasure"
-        android:layout_alignParentRight="true"
-        android:textStyle="bold|italic"
-        android:layout_marginBottom="60dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
     <Button
         android:id="@+id/button_digit"
         android:background="@drawable/btn_shovel_up"
