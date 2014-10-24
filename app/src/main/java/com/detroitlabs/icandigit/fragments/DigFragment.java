@@ -21,6 +21,7 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -37,6 +38,7 @@ public class DigFragment extends Fragment implements LocationListener{
     private final int minDistance = 1; //distance required to move to update userLocation
     private ArrayList<Marker> listOfHoleMarkers = new ArrayList<Marker>();
     private Button digButton;
+    Marker littleRedHuman;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,8 +47,6 @@ public class DigFragment extends Fragment implements LocationListener{
 
         setUpMapIfNeeded();
 
-        googleMap.setMyLocationEnabled(true);
-        googleMap.getUiSettings().setMyLocationButtonEnabled(false);
         googleMap.getUiSettings().setAllGesturesEnabled(false);
         googleMap.getUiSettings().setZoomControlsEnabled(false);
 
@@ -113,14 +113,15 @@ public class DigFragment extends Fragment implements LocationListener{
     public void onResume() {
         super.onResume();
 
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
         /* Disable the my-userLocation layer (this causes our LocationSource to be automatically deactivated.) */
-        //googleMap.setMyLocationEnabled(false);
-        //locationManager.removeUpdates(this);
+        googleMap.setMyLocationEnabled(false);
+        locationManager.removeUpdates(this);
     }
 
     private void setUpMapIfNeeded() {
@@ -192,6 +193,16 @@ public class DigFragment extends Fragment implements LocationListener{
 
         CameraUpdate zoom=CameraUpdateFactory.zoomTo((float)18.5);
         googleMap.animateCamera(zoom);
+
+        if (littleRedHuman != null){
+            littleRedHuman.remove();
+        }
+
+
+        littleRedHuman = (googleMap.addMarker
+                (new MarkerOptions()
+                        .position(new LatLng(locationManager.getLastKnownLocation(locationProvider).getLatitude(),locationManager.getLastKnownLocation(locationProvider).getLongitude()))
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.your_location))));
     }
 
     @Override
