@@ -6,10 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.detroitlabs.icandigit.fragments.DigFragment;
-import com.detroitlabs.icandigit.fragments.InventoryFragment;
 
 public class MainActivity extends Activity {
 
