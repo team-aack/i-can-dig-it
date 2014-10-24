@@ -53,14 +53,6 @@ public class DigFragment extends Fragment implements LocationListener{
             {
                 InventoryService.startDig();
 
-
-
-
-
-
-
-
-
         //This came from Android Developer Docs, but didn't work too well for me.
 //
 //                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
+import com.detroitlabs.icandigit.fragments.InventoryFragment;
+
 
 public class InventoryActivity extends Activity {
 
@@ -11,7 +13,6 @@ public class InventoryActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
-        //getActivity().setTitle(R.string.inventory_title);
 
         FragmentTransaction mFragmentTransaction = getFragmentManager().beginTransaction();
 
@@ -24,9 +25,4 @@ public class InventoryActivity extends Activity {
     }
 
 
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        inflater.inflate(R.layout.inventory_fragment, container,false);
-//        return super.onCreateView(inflater, container, savedInstanceState);
-//    }
 }
