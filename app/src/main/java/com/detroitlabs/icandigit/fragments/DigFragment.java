@@ -2,7 +2,6 @@ package com.detroitlabs.icandigit.fragments;
 
 import android.app.Dialog;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
@@ -46,12 +45,12 @@ public class DigFragment extends Fragment implements LocationListener{
 
         setUpMapIfNeeded();
 
-        initializeLocationManager();
-
         googleMap.setMyLocationEnabled(true);
         googleMap.getUiSettings().setMyLocationButtonEnabled(false);
         googleMap.getUiSettings().setAllGesturesEnabled(false);
         googleMap.getUiSettings().setZoomControlsEnabled(false);
+
+        initializeLocationManager();
 
         locationManager.requestLocationUpdates(locationProvider, minTime, minDistance, this);
 
@@ -120,8 +119,8 @@ public class DigFragment extends Fragment implements LocationListener{
     public void onPause() {
         super.onPause();
         /* Disable the my-userLocation layer (this causes our LocationSource to be automatically deactivated.) */
-        googleMap.setMyLocationEnabled(false);
-        locationManager.removeUpdates(this);
+        //googleMap.setMyLocationEnabled(false);
+        //locationManager.removeUpdates(this);
     }
 
     private void setUpMapIfNeeded() {
