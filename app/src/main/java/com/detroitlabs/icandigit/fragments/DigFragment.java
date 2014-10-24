@@ -46,6 +46,7 @@ public class DigFragment extends Fragment implements LocationListener{
     private Button inventoryButton;
     Marker littleRedHuman;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
