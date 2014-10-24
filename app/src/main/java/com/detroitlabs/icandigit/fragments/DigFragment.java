@@ -103,7 +103,7 @@ public class DigFragment extends Fragment implements LocationListener{
 
 // Set the dialog text -- this is better done in the XML
                 TextView text = (TextView)dialog.findViewById(R.id.dialog_text_view);
-                text.setText(InventoryService.freshTreasure.getItemType() + "!");
+                text.setText(InventoryService.freshTreasure.getItemType());
 
 // Display the dialog
                 dialog.show();
