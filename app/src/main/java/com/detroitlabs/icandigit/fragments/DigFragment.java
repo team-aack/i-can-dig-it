@@ -3,6 +3,7 @@ package com.detroitlabs.icandigit.fragments;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.detroitlabs.icandigit.InventoryActivity;
 import com.detroitlabs.icandigit.R;
 import com.detroitlabs.icandigit.services.InventoryService;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -41,7 +43,9 @@ public class DigFragment extends Fragment implements LocationListener{
     private final int minDistance = 1; //distance required to move to update userLocation
     private ArrayList<Marker> listOfHoleMarkers = new ArrayList<Marker>();
     private Button digButton;
+    private Button inventoryButton;
     Marker littleRedHuman;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,6 +66,17 @@ public class DigFragment extends Fragment implements LocationListener{
             @Override
             public boolean onMarkerClick(Marker marker) {
                 return true;
+            }
+        });
+
+        inventoryButton = (Button) rootView.findViewById(R.id.button_inventory);
+        inventoryButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getActivity(), InventoryActivity.class);
+                startActivity(intent);
             }
         });
 
