@@ -2,6 +2,7 @@ package com.detroitlabs.icandigit;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,6 +49,10 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
+        }
+        if (id == R.id.inventory) {
+            Intent intent = new Intent(this, InventoryActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

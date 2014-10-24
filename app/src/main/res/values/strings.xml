@@ -22,6 +22,9 @@
     <string name="treasure14">Jeff Burt</string>
     <string name="treasure15">Harvey</string>
     <string name="treasure16">Henry Balanon</string>
-
+    <string name="inventory_title">Inventory</string>
+    <string name="action_inventory">View Inventory</string>
+    <string name="title_activity_inventory">InventoryActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
