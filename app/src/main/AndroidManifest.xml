@@ -27,6 +27,7 @@
             android:value="AIzaSyBWXcemAIjKvTLA2agtckDLluYv38Xgky0" />
 
         <activity
+            android:screenOrientation="portrait"
             android:name=".InventoryActivity"
             android:label="@string/title_activity_inventory" >
         </activity>

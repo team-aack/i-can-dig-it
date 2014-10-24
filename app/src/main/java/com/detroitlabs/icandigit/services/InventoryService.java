@@ -80,7 +80,7 @@ public class InventoryService {
             case 43: newThing = new Treasure("Ghetto Blaster",1); break;
             case 44: newThing = new Treasure("iPhone 6",1); break;
             case 45: newThing = new Treasure("Moto X",1); break;
-            case 46: newThing = new Treasure("Nose",1); break;
+            case 46: newThing = new Treasure("Rope",1); break;
             case 47: newThing = new Treasure("Shirt",1); break;
             case 48: newThing = new Treasure("Velvet",1); break;
             case 49: newThing = new Treasure("Syringe",1); break;
