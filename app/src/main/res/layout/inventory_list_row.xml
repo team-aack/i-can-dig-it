@@ -10,20 +10,30 @@
         android:background="@drawable/ic_treasure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:weight=".25"/>
+        android:gravity="center_vertical" />
 
     <TextView
         android:id="@+id/treasureCounter"
-        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/treasure01"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/treasureIcon"
+        android:layout_toEndOf="@+id/treasureIcon"
+        android:layout_alignBottom="@+id/treasureIcon"
+        android:gravity="center_vertical|center_horizontal"/>
+
+    <TextView
+        android:id="@+id/treasureItem"
+        android:gravity="center_vertical|center_horizontal"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_toRightOf="@+id/treasureIcon"
         android:text="@string/treasure01"
-        android:weight=".5"
-        android:layout_alignBottom="@+id/treasureIcon"
+        android:layout_alignBottom="@id/treasureIcon"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/treasureCounter"
+        android:layout_toEndOf="@+id/treasureCounter" />
 
 </RelativeLayout>
