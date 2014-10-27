@@ -14,25 +14,41 @@
         android:gravity="center_vertical" />
 
     <TextView
-        android:id="@+id/treasureCounter"
+        android:id="@+id/multipleSign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/treasure01"
-        android:layout_alignParentTop="true"
+        android:text="x"
         android:textColor="#FFFFFF"
+        android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/treasureIcon"
         android:layout_toEndOf="@+id/treasureIcon"
         android:layout_alignBottom="@+id/treasureIcon"
+        android:gravity="center_vertical|center_horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"/>
+
+    <TextView
+        android:id="@+id/treasureCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="hihihi"
+        android:textColor="#FFFFFF"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/multipleSign"
+        android:layout_toEndOf="@+id/multipleSign"
+        android:layout_alignBottom="@+id/multipleSign"
         android:gravity="center_vertical|center_horizontal"/>
 
     <TextView
         android:id="@+id/treasureItem"
-        android:gravity="center_vertical|center_horizontal"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="@string/treasure01"
-        android:textColor="#"
-        android:layout_alignBottom="@id/treasureIcon"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="treasure item"
+        android:layout_alignBottom="@+id/treasureCounter"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
