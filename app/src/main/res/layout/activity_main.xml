@@ -8,11 +8,16 @@
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/fragment_container_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        </FrameLayout>
 
     <FrameLayout
         android:id="@+id/fragment_container2"
-        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_gravity="top"/>
