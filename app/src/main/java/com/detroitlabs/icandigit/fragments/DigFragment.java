@@ -82,7 +82,6 @@ public class DigFragment extends Fragment implements LocationListener{
 //
 //                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 //
-//
 //                // Create new fragments and transaction
 //                DugDialogFragment dugDialogFragment = new DugDialogFragment();
 //

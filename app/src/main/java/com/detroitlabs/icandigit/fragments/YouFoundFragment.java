@@ -27,6 +27,7 @@ public class YouFoundFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.dialog_view, container, false);
 
         mTextView = (TextView) rootView.findViewById(R.id.dialog_text_view);
+        mTextView.setVisibility(View.VISIBLE);
         mTextView.setText(InventoryService.freshTreasure.getItemType().toUpperCase());
 
         return rootView;
