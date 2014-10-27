@@ -40,13 +40,14 @@ public class DigFragment extends Fragment implements LocationListener{
     private ArrayList<Marker> listOfHoleMarkers = new ArrayList<Marker>();
     private Button digButton;
     private Button inventoryButton;
+    private Button mBkgButton;
     Marker littleRedHuman;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View rootView = inflater.inflate(R.layout.fragment_map, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_map, container, false);
 
         setUpMapIfNeeded();
 
@@ -99,6 +100,7 @@ public class DigFragment extends Fragment implements LocationListener{
                 // Commit the transaction
                 fragmentTransaction.add(R.id.fragment_container2, youFoundFragment);
                 fragmentTransaction.commit();
+
 
 
 
