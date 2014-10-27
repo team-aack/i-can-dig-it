@@ -91,16 +91,32 @@ public class DigFragment extends Fragment implements LocationListener{
 ////                fragmentTransaction.commit();
 
 
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
                 // Create new fragments and transaction
-                YouFoundFragment youFoundFragment = new YouFoundFragment();
-                BkgButtonFragment bkgButtonFragment = new BkgButtonFragment();
+                final YouFoundFragment youFoundFragment = new YouFoundFragment();
+                final BkgButtonFragment bkgButtonFragment = new BkgButtonFragment();
 
-                // Commit the transaction
-                fragmentTransaction.add(R.id.fragment_container2, youFoundFragment);
-                fragmentTransaction.add(R.id.fragment_container, bkgButtonFragment);
-                fragmentTransaction.commit();
+                if(fragmentTransaction.isEmpty()) {
+
+
+                    // Commit the transaction
+                    fragmentTransaction.add(R.id.fragment_container2, youFoundFragment);
+                    fragmentTransaction.add(R.id.fragment_container, bkgButtonFragment);
+                    fragmentTransaction.commit();
+
+                    //Then, turn the bkgButtonFragment into a giant button for real.
+//                    bkgButtonFragment.getButton().setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+////                            fragmentTransaction.detach(youFoundFragment);
+////                            fragmentTransaction.detach(bkgButtonFragment);
+////                            fragmentTransaction.commit();
+//                        }
+//                    });
+                }
+
+
 
 
 

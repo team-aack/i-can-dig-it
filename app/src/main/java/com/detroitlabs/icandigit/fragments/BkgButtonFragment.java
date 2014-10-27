@@ -18,6 +18,10 @@ import com.detroitlabs.icandigit.services.InventoryService;
 public class BkgButtonFragment extends Fragment {
     private Button mButton;
 
+    public Button getButton() {
+        return mButton;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -26,13 +30,6 @@ public class BkgButtonFragment extends Fragment {
         mButton = (Button) rootView.findViewById(R.id.fragment_container_button);
         mButton.setBackgroundColor(getResources().getColor(R.color.trans_white));
         mButton.setEnabled(false);
-
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Blank until we sort this out
-            }
-        });
 
         return rootView;
     }
