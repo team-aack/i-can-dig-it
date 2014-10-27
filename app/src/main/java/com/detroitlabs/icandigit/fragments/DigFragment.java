@@ -98,7 +98,7 @@ public class DigFragment extends Fragment implements LocationListener{
                 YouFoundFragment youFoundFragment = new YouFoundFragment();
 
                 // Commit the transaction
-                fragmentTransaction.add(R.id.fragment_container, youFoundFragment);
+                fragmentTransaction.add(R.id.fragment_container2, youFoundFragment);
                 fragmentTransaction.commit();
 
 
