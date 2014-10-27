@@ -40,7 +40,6 @@ public class DigFragment extends Fragment implements LocationListener{
     private ArrayList<Marker> listOfHoleMarkers = new ArrayList<Marker>();
     private Button digButton;
     private Button inventoryButton;
-    private Button mBkgButton;
     Marker littleRedHuman;
 
 
@@ -96,9 +95,11 @@ public class DigFragment extends Fragment implements LocationListener{
 
                 // Create new fragments and transaction
                 YouFoundFragment youFoundFragment = new YouFoundFragment();
+                BkgButtonFragment bkgButtonFragment = new BkgButtonFragment();
 
                 // Commit the transaction
                 fragmentTransaction.add(R.id.fragment_container2, youFoundFragment);
+                fragmentTransaction.add(R.id.fragment_container, bkgButtonFragment);
                 fragmentTransaction.commit();
 
 
