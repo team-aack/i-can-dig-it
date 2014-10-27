@@ -30,7 +30,7 @@ public class InventoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        mTreasureAdapter = new ArrayAdapter<Treasure>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, InventoryService.itemInventory);
+        mTreasureAdapter = new ArrayAdapter<Treasure>(getActivity(), R.layout.inventory_list_row, R.id., InventoryService.itemInventory);
         View rootView = inflater.inflate(R.layout.inventory_fragment, container,false);
         ListView listView = (ListView) rootView.findViewById(R.id.inventory_list);
         listView.setAdapter(mTreasureAdapter);
