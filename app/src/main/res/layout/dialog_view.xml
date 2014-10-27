@@ -11,22 +11,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:padding="12dp"
         android:text="@string/you_found"
         android:textSize="20sp"
         android:textColor="@color/light_grey"/>
 
-    <ImageView
-        android:id="@+id/dialog_image"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/ic_treasure"/>
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
 
 
-    <TextView
-        android:id="@+id/dialog_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/dialog_image"/>
+        <ImageView
+            android:id="@+id/dialog_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_treasure"
+            android:layout_weight="1"/>
+
+
+        <TextView
+            android:id="@+id/dialog_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+</LinearLayout>
 </RelativeLayout>
