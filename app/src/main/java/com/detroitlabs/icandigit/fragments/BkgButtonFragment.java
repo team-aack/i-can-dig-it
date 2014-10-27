@@ -1,6 +1,7 @@
 package com.detroitlabs.icandigit.fragments;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,13 @@ public class BkgButtonFragment extends Fragment {
         mButton = (Button) rootView.findViewById(R.id.fragment_container_button);
         mButton.setBackgroundColor(getResources().getColor(R.color.trans_white));
         mButton.setEnabled(false);
+
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Blank until we sort this out
+            }
+        });
 
         return rootView;
     }
