@@ -6,4 +6,5 @@
     <color name="light_grey">#cccccc</color>
     <color name="gold">#ddbb00</color>
     <color name="trans_white">#70ffffff</color>
+    <color name="trans_gold">#70ddbb00</color>
 </resources>

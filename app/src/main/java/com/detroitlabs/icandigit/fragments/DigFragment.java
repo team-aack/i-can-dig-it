@@ -106,14 +106,9 @@ public class DigFragment extends Fragment implements LocationListener{
                     fragmentTransaction.commit();
 
                     //Then, turn the bkgButtonFragment into a giant button for real.
-//                    bkgButtonFragment.getButton().setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-////                            fragmentTransaction.detach(youFoundFragment);
-////                            fragmentTransaction.detach(bkgButtonFragment);
-////                            fragmentTransaction.commit();
-//                        }
-//                    });
+                    Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_container);   //We'll see if we need this ever
+                    Button button = bkgButtonFragment.getButton();
+                    //Seems like there's not much we can do with this button.
                 }
 
 

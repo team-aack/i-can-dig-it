@@ -31,6 +31,16 @@ public class BkgButtonFragment extends Fragment {
         mButton.setBackgroundColor(getResources().getColor(R.color.trans_white));
         mButton.setEnabled(false);
 
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mButton.setBackgroundColor(getResources().getColor(R.color.trans_gold));
+//                            fragmentTransaction.detach(youFoundFragment);
+//                            fragmentTransaction.detach(bkgButtonFragment);
+//                            fragmentTransaction.commit();
+            }
+        });
+
         return rootView;
     }
 }
