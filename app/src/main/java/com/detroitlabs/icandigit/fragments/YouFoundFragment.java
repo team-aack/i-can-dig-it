@@ -32,7 +32,7 @@ public class YouFoundFragment extends Fragment {
 
         mTextView = (TextView) rootView.findViewById(R.id.dialog_text_view);
         mTextView.setVisibility(View.VISIBLE);
-        mTextView.setText(InventoryService.freshTreasure.getItemType().toUpperCase());
+        mTextView.setText("Nothing yet, ma'am.");
 
         return rootView;
     }

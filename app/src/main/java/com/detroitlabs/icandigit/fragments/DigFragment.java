@@ -66,6 +66,24 @@ public class DigFragment extends Fragment implements LocationListener{
             }
         });
 
+        // Create new fragments and transaction
+
+        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        final YouFoundFragment youFoundFragment = new YouFoundFragment();
+        final BkgButtonFragment bkgButtonFragment = new BkgButtonFragment();
+
+        if (fragmentTransaction.isEmpty()) {
+
+
+            // Commit the transaction
+            fragmentTransaction.add(R.id.fragment_container2, youFoundFragment);
+            fragmentTransaction.add(R.id.fragment_container, bkgButtonFragment);
+            Log.v(LOG_TAG, "*********put the YouFoundFragment and BkgButtonFragment at the top");
+            fragmentTransaction.commit();
+            Log.v(LOG_TAG, "********COMMITTING!!");
+
+        }
+
         digButton = (Button) rootView.findViewById(R.id.button_digit);
         digButton.setOnClickListener(new View.OnClickListener()
         {
@@ -79,42 +97,8 @@ public class DigFragment extends Fragment implements LocationListener{
                                 .position(new LatLng(locationManager.getLastKnownLocation(locationProvider).getLatitude(),locationManager.getLastKnownLocation(locationProvider).getLongitude()))
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.your_hole))));
 
-        //This came from Android Developer Docs, but didn't work too well for me.
-//
-//                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//
-//                // Create new fragments and transaction
-//                DugDialogFragment dugDialogFragment = new DugDialogFragment();
-//
-//                // Commit the transaction
-//                fragmentTransaction.add(R.id.fragment_container, dugDialogFragment);
-//                dugDialogFragment.show(fragmentTransaction, "not sure what this should be");
-////                fragmentTransaction.commit();
 
-
-
-                // Create new fragments and transaction
-
-                final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                final YouFoundFragment youFoundFragment = new YouFoundFragment();
-                final BkgButtonFragment bkgButtonFragment = new BkgButtonFragment();
-
-                    if (fragmentTransaction.isEmpty()) {
-
-
-                        // Commit the transaction
-                        fragmentTransaction.add(R.id.fragment_container2, youFoundFragment);
-                        fragmentTransaction.add(R.id.fragment_container, bkgButtonFragment);
-                        Log.v(LOG_TAG, "*********put the YouFoundFragment and BkgButtonFragment at the top");
-                        fragmentTransaction.commit();
-                        Log.v(LOG_TAG, "********COMMITTING!!");
-
-                        //Then, turn the bkgButtonFragment into a giant button for real.
-//                    Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_container);   //We'll see if we need this ever
-//                    Button button = bkgButtonFragment.getButton();
-                        //Seems like there's not much we can do with this button.
                     }
-            }
         });
 
         return rootView;
