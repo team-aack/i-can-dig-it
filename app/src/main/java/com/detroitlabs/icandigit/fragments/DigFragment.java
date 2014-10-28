@@ -97,6 +97,8 @@ public class DigFragment extends Fragment implements LocationListener{
                                 .position(new LatLng(locationManager.getLastKnownLocation(locationProvider).getLatitude(),locationManager.getLastKnownLocation(locationProvider).getLongitude()))
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.your_hole))));
 
+                String newTreasure = InventoryService.freshTreasure.getItemType().toUpperCase();
+                youFoundFragment.getTextView().setText(newTreasure);
 
                     }
         });
