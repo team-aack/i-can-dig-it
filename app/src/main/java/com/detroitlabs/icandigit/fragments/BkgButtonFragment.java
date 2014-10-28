@@ -2,10 +2,12 @@ package com.detroitlabs.icandigit.fragments;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -35,8 +37,8 @@ public class BkgButtonFragment extends Fragment {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mButton.setVisibility(View.GONE);
 
-                mButton.setBackgroundColor(getResources().getColor(R.color.trans_gold));
 //                            fragmentTransaction.detach(youFoundFragment);
 //                            fragmentTransaction.detach(bkgButtonFragment);
 //                            fragmentTransaction.commit();

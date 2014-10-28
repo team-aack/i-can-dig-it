@@ -41,6 +41,7 @@ public class DigFragment extends Fragment implements LocationListener{
     private Button digButton;
     private Button inventoryButton;
     Marker littleRedHuman;
+    public static final String LOG_TAG = DigFragment.class.getSimpleName();
 
 
     @Override
@@ -104,34 +105,13 @@ public class DigFragment extends Fragment implements LocationListener{
                     fragmentTransaction.add(R.id.fragment_container2, youFoundFragment);
                     fragmentTransaction.add(R.id.fragment_container, bkgButtonFragment);
                     fragmentTransaction.commit();
+                    Log.v(LOG_TAG, "the YouFoundFragment and BkgButtonFragment are now at the top");
 
                     //Then, turn the bkgButtonFragment into a giant button for real.
 //                    Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_container);   //We'll see if we need this ever
 //                    Button button = bkgButtonFragment.getButton();
                     //Seems like there's not much we can do with this button.
                 }
-
-
-
-
-
-
-                //COMMENTING THIS OUT WHILE TESTING THE FRAGMENT
-//                // Created a new Dialog
-//                Dialog dialog = new Dialog(getActivity());
-//
-//// Set the title
-//                dialog.setTitle(R.string.you_found);
-//
-//// inflate the layout
-//                dialog.setContentView(R.layout.dialog_view);
-//
-//// Set the dialog text -- this is better done in the XML
-//                TextView text = (TextView)dialog.findViewById(R.id.dialog_text_view);
-//                text.setText(InventoryService.freshTreasure.getItemType() + "!");
-//
-//// Display the dialog
-//                dialog.show();
             }
         });
 
