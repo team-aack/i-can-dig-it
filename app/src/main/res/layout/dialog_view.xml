@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:background="#4a4a4a"
                 android:layout_width="match_parent"
                 android:layout_height="130dp">
@@ -30,6 +31,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_treasure"/>
         <TextView
+            tools:text="Something"
             android:layout_margin="14dp"
             android:textSize="20sp"
             android:id="@+id/dialog_text_view"

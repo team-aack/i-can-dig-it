@@ -96,12 +96,12 @@ public class DigFragment extends Fragment implements LocationListener{
                 // Create new fragments and transaction
 
                 final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                final YouFoundFragment youFoundFragment = new YouFoundFragment();
+                final BkgButtonFragment bkgButtonFragment = new BkgButtonFragment();
 
-                do {
                     if (fragmentTransaction.isEmpty()) {
 
-                        final YouFoundFragment youFoundFragment = new YouFoundFragment();
-                        final BkgButtonFragment bkgButtonFragment = new BkgButtonFragment();
+
                         // Commit the transaction
                         fragmentTransaction.add(R.id.fragment_container2, youFoundFragment);
                         fragmentTransaction.add(R.id.fragment_container, bkgButtonFragment);
@@ -113,13 +113,7 @@ public class DigFragment extends Fragment implements LocationListener{
 //                    Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_container);   //We'll see if we need this ever
 //                    Button button = bkgButtonFragment.getButton();
                         //Seems like there's not much we can do with this button.
-                    } else {
-                        fragmentTransaction.remove(getFragmentManager().findFragmentById(R.id.fragment_container2));
-                        fragmentTransaction.remove(getFragmentManager().findFragmentById(R.id.fragment_container));
-                        Log.v(LOG_TAG, "**********About to remove the last YouFoundFragment and BkgButtonFragment");
-
                     }
-                } while (fragmentTransaction.isEmpty());
             }
         });
 

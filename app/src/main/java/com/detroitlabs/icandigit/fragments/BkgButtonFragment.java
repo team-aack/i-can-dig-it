@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.detroitlabs.icandigit.MainActivity;
 import com.detroitlabs.icandigit.R;
 import com.detroitlabs.icandigit.services.InventoryService;
 
@@ -38,6 +39,7 @@ public class BkgButtonFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mButton.setVisibility(View.GONE);
+
 
 //                            fragmentTransaction.detach(youFoundFragment);
 //                            fragmentTransaction.detach(bkgButtonFragment);
