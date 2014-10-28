@@ -66,6 +66,7 @@ public class DigFragment extends Fragment implements LocationListener{
         });
 
         digButton = (Button) rootView.findViewById(R.id.button_digit);
+        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         digButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -91,7 +92,6 @@ public class DigFragment extends Fragment implements LocationListener{
 ////                fragmentTransaction.commit();
 
 
-                final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
                 // Create new fragments and transaction
                 final YouFoundFragment youFoundFragment = new YouFoundFragment();

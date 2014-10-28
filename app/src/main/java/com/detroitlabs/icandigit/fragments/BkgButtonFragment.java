@@ -40,6 +40,8 @@ public class BkgButtonFragment extends Fragment {
 //                            fragmentTransaction.detach(youFoundFragment);
 //                            fragmentTransaction.detach(bkgButtonFragment);
 //                            fragmentTransaction.commit();
+
+
             }
         });
 
