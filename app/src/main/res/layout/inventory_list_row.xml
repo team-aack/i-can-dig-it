@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:background="#4a4a4a"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent" >
 
     <ImageView
         android:id="@+id/treasureIcon"
@@ -17,7 +17,7 @@
         android:id="@+id/multipleSign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="x"
+        android:text="X"
         android:textColor="#EAEAEA"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/treasureIcon"
@@ -31,7 +31,7 @@
         android:id="@+id/treasureCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="hihihi"
+        android:text=""
         android:textColor="#EAEAEA"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:textColor="#FFE168"
         android:gravity="center_vertical|center_horizontal"
-        android:text="treasure item"
+        android:text=""
         android:layout_alignBottom="@+id/treasureCounter"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
