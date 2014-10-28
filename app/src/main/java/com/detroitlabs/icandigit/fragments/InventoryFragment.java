@@ -13,9 +13,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.detroitlabs.icandigit.R;
+import com.detroitlabs.icandigit.fragments.adapters.InventoryAdapter;
 import com.detroitlabs.icandigit.objects.Treasure;
 import com.detroitlabs.icandigit.services.InventoryService;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -27,6 +29,8 @@ public class InventoryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle(R.string.inventory_title);
+
+        InventoryAdapter mInventoryAdapter;
     }
 
 
