@@ -1,6 +1,7 @@
 package com.detroitlabs.icandigit.fragments;
 
 import android.app.Fragment;
+import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,14 +24,21 @@ import java.util.ArrayList;
 /**
  * Created by aditishetty on 10/23/14.
  */
-public class InventoryFragment extends Fragment {
+public class InventoryFragment extends ListFragment {
+
+    InventoryAdapter mInventoryAdapter;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle(R.string.inventory_title);
 
-        InventoryAdapter mInventoryAdapter;
+    }
+
+    private void setAdapter() {
+        mInventoryAdapter = new InventoryAdapter(getActivity(), InventoryService.itemInventory);
+        this.setListAdapter(mInventoryAdapter);
     }
 
 

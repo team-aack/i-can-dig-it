@@ -12,17 +12,18 @@ import com.detroitlabs.icandigit.R;
 import com.detroitlabs.icandigit.objects.Treasure;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by aditishetty on 10/28/14.
  */
-public abstract class InventoryAdapter extends BaseAdapter {
+public class InventoryAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
-    private ArrayList<Treasure> mTreasure;
+    private List<Treasure> mTreasure;
     private Context context;
 
-    public InventoryAdapter(Context context, ArrayList<Treasure> treasure) {
+    public InventoryAdapter(Context context, List<Treasure> treasure) {
         this.context = context;
         mInflater = LayoutInflater.from(context);
         mTreasure = treasure;
@@ -31,6 +32,11 @@ public abstract class InventoryAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         return mTreasure.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return null;
     }
 
     @Override
