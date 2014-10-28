@@ -67,7 +67,6 @@ public class DigFragment extends Fragment implements LocationListener{
         });
 
         digButton = (Button) rootView.findViewById(R.id.button_digit);
-        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         digButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -95,23 +94,32 @@ public class DigFragment extends Fragment implements LocationListener{
 
 
                 // Create new fragments and transaction
-                final YouFoundFragment youFoundFragment = new YouFoundFragment();
-                final BkgButtonFragment bkgButtonFragment = new BkgButtonFragment();
 
-                if(fragmentTransaction.isEmpty()) {
+                final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
+                do {
+                    if (fragmentTransaction.isEmpty()) {
 
-                    // Commit the transaction
-                    fragmentTransaction.add(R.id.fragment_container2, youFoundFragment);
-                    fragmentTransaction.add(R.id.fragment_container, bkgButtonFragment);
-                    fragmentTransaction.commit();
-                    Log.v(LOG_TAG, "the YouFoundFragment and BkgButtonFragment are now at the top");
+                        final YouFoundFragment youFoundFragment = new YouFoundFragment();
+                        final BkgButtonFragment bkgButtonFragment = new BkgButtonFragment();
+                        // Commit the transaction
+                        fragmentTransaction.add(R.id.fragment_container2, youFoundFragment);
+                        fragmentTransaction.add(R.id.fragment_container, bkgButtonFragment);
+                        Log.v(LOG_TAG, "*********put the YouFoundFragment and BkgButtonFragment at the top");
+                        fragmentTransaction.commit();
+                        Log.v(LOG_TAG, "********COMMITTING!!");
 
-                    //Then, turn the bkgButtonFragment into a giant button for real.
+                        //Then, turn the bkgButtonFragment into a giant button for real.
 //                    Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_container);   //We'll see if we need this ever
 //                    Button button = bkgButtonFragment.getButton();
-                    //Seems like there's not much we can do with this button.
-                }
+                        //Seems like there's not much we can do with this button.
+                    } else {
+                        fragmentTransaction.remove(getFragmentManager().findFragmentById(R.id.fragment_container2));
+                        fragmentTransaction.remove(getFragmentManager().findFragmentById(R.id.fragment_container));
+                        Log.v(LOG_TAG, "**********About to remove the last YouFoundFragment and BkgButtonFragment");
+
+                    }
+                } while (fragmentTransaction.isEmpty());
             }
         });
 
