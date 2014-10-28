@@ -21,6 +21,10 @@ public class YouFoundFragment extends Fragment {
 
     private TextView mTextView;
 
+    public TextView getTextView() {
+        return mTextView;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -32,8 +36,4 @@ public class YouFoundFragment extends Fragment {
 
         return rootView;
     }
-
-
-
-
 }
