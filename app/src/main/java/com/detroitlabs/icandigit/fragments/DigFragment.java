@@ -76,7 +76,6 @@ public class DigFragment extends Fragment implements LocationListener{
 
 
             // Commit the transaction
-            fragmentTransaction.add(R.id.fragment_container2, youFoundFragment);
             fragmentTransaction.add(R.id.fragment_container, bkgButtonFragment);
             Log.v(LOG_TAG, "*********put the YouFoundFragment and BkgButtonFragment at the top");
             fragmentTransaction.commit();
@@ -98,8 +97,6 @@ public class DigFragment extends Fragment implements LocationListener{
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.your_hole))));
 
                 String newTreasure = InventoryService.freshTreasure.getItemType().toUpperCase();
-                youFoundFragment.getRelativeLayout().setVisibility(View.VISIBLE);
-                youFoundFragment.getTextView().setText(newTreasure);
                 bkgButtonFragment.getButton().setVisibility(View.VISIBLE);
                     }
         });
