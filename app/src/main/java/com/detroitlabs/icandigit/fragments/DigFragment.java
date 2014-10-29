@@ -3,7 +3,6 @@ package com.detroitlabs.icandigit.fragments;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -29,7 +28,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class DigFragment extends Fragment implements LocationListener{
@@ -44,20 +45,11 @@ public class DigFragment extends Fragment implements LocationListener{
     private Marker littleRedHuman;
     private Marker digSiteMarker;
     private long digSiteTimeStamp;
-    private SharedPreferences digPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-    private SharedPreferences.Editor digEditor = digPrefs.edit();
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
-
-
-        //retrieves string containing json data from shared preferences and gets object from it
-        Gson gson = new Gson();
-        String json = digPrefs.getString("listOfDigSites", "");
-        listOfDigSites = gson.fromJson(json, ArrayList.class);
 
         setUpMapIfNeeded();
 
@@ -92,7 +84,7 @@ public class DigFragment extends Fragment implements LocationListener{
                                 .position(new LatLng(locationManager.getLastKnownLocation(locationProvider).getLatitude(),locationManager.getLastKnownLocation(locationProvider).getLongitude()))
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.your_hole))); //changes the icon used on this
 
-                listOfDigSites.add (new DigSite(digSiteTimeStamp,digSiteMarker));
+                listOfDigSites.add(new DigSite(digSiteTimeStamp, digSiteMarker.getPosition().latitude, digSiteMarker.getPosition().longitude));
 
         //This came from Android Developer Docs, but didn't work too well for me.
 //
@@ -133,8 +125,21 @@ public class DigFragment extends Fragment implements LocationListener{
     public void onResume() {
         super.onResume();
 
-
         locationManager.requestLocationUpdates(locationProvider, minTime, minDistance, this);
+
+        //retrieves string containing json data from shared preferences and gets object from it
+        Gson gson = new Gson();
+        String json = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("listOfDigSites", "empty");
+        if (json != "empty") {
+            Type digSiteType = new TypeToken<ArrayList<DigSite>>(){}.getType();
+            listOfDigSites = gson.fromJson(json, digSiteType);
+        }
+        for(DigSite currentSite: listOfDigSites){
+            googleMap.addMarker
+                    (new MarkerOptions()
+                            .position(new LatLng(currentSite.getLat(),currentSite.getLng()))
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.your_hole))); //changes the icon used on this
+        }
     }
 
     @Override
@@ -145,9 +150,10 @@ public class DigFragment extends Fragment implements LocationListener{
         locationManager.removeUpdates(this);
         Gson gson = new Gson();
         String json = gson.toJson(listOfDigSites);
-        digEditor.putString("listOfDigSites", json);
-        digEditor.commit();
-
+        PreferenceManager.getDefaultSharedPreferences(getActivity())
+                .edit()
+                .putString("listOfDigSites", json)
+                .commit();
     }
 
     private void setUpMapIfNeeded() {
@@ -205,7 +211,7 @@ public class DigFragment extends Fragment implements LocationListener{
 
         littleRedHuman = (googleMap.addMarker
                 (new MarkerOptions()
-                        .position(new LatLng(locationManager.getLastKnownLocation(locationProvider).getLatitude(),locationManager.getLastKnownLocation(locationProvider).getLongitude()))
+                        .position(new LatLng(locationManager.getLastKnownLocation(locationProvider).getLatitude(), locationManager.getLastKnownLocation(locationProvider).getLongitude()))
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.your_location))));
     }
 

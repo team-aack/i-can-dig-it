@@ -1,17 +1,17 @@
 package com.detroitlabs.icandigit.objects;
 
-import com.google.android.gms.maps.model.Marker;
-
 /**
  * Created by Borham on 10/28/14.
  */
 public class DigSite {
     private long timeStamp;  //long to hold the current time in milliseconds
-    private Marker siteMarker;
+    private double lat;
+    private double lng;
 
-    public DigSite(long timeStamp, Marker siteMarker) {
+    public DigSite(long timeStamp, double lat, double lng) {
         this.timeStamp = timeStamp;
-        this.siteMarker = siteMarker;
+        this.lat = lat;
+        this.lng = lng;
     }
 
     public long getTimeStamp() {
@@ -22,11 +22,19 @@ public class DigSite {
         this.timeStamp = timeStamp;
     }
 
-    public Marker getSiteMarker() {
-        return siteMarker;
+    public double getLat() {
+        return lat;
     }
 
-    public void setSiteMarker(Marker siteMarker) {
-        this.siteMarker = siteMarker;
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
     }
 }
