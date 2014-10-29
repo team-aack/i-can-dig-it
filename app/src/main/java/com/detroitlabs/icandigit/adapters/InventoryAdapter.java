@@ -1,4 +1,4 @@
-package com.detroitlabs.icandigit.fragments.adapters;
+package com.detroitlabs.icandigit.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,11 +11,10 @@ import android.widget.TextView;
 import com.detroitlabs.icandigit.R;
 import com.detroitlabs.icandigit.objects.Treasure;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by aditishetty on 10/28/14.
+ * Created by aditishetty on 10/29/14.
  */
 public class InventoryAdapter extends BaseAdapter {
 
