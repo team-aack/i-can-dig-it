@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:background="#4a4a4a"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/treasureIcon"
@@ -17,42 +17,32 @@
         android:id="@+id/multipleSign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="X"
+        android:text="YO"
         android:textColor="#EAEAEA"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/treasureIcon"
-        android:layout_toEndOf="@+id/treasureIcon"
-        android:layout_alignBottom="@+id/treasureIcon"
-        android:gravity="center_vertical|center_horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"/>
+        android:paddingRight="5dp"
+        android:textSize="20dp"/>
 
     <TextView
         android:id="@+id/treasureCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="treasure count here"
+        android:text="YO"
         android:textColor="#EAEAEA"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_alignParentTop="true"
+        android:paddingRight="20dp"
+        android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/multipleSign"
-        android:layout_toEndOf="@+id/multipleSign"
-        android:layout_alignBottom="@+id/multipleSign"
-        android:gravity="center_vertical|center_horizontal"/>
+        android:textSize="20dp"/>
 
     <TextView
         android:id="@+id/treasureItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="YO"
         android:textColor="#FFE168"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="treasure item here"
-        android:layout_alignBottom="@+id/treasureCounter"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/treasureCounter"
-        android:layout_toEndOf="@+id/treasureCounter" />
+        android:textSize="20dp"/>
 
 </RelativeLayout>
