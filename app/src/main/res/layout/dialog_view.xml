@@ -1,20 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/dialog_relative_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/dialog_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_treasure"/>
+    <Button
+        android:id="@+id/fragment_container_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        </Button>
 
+    <RelativeLayout
+        android:id="@+id/frag_co"
+        android:background="@color/grey"
+        android:layout_width="match_parent"
+        android:layout_height="130dp">
 
-    <TextView
-        android:id="@+id/dialog_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/dialog_image"/>
+        <TextView
+            android:id="@+id/you_found"
+            android:text="@string/you_found"
+            android:textStyle="bold"
+            android:layout_marginTop="14dp"
+            android:textSize="24sp"
+            android:textColor="#eaeaea"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_marginTop="12dp"
+            android:layout_below="@id/you_found"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/dialog_image"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_treasure"/>
+            <TextView
+                tools:text="Something"
+                android:layout_margin="14dp"
+                android:textSize="20sp"
+                android:id="@+id/dialog_text_view"
+                android:textColor="#ffe168"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
 </RelativeLayout>
