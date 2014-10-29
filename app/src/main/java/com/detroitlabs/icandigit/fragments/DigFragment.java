@@ -100,6 +100,7 @@ public class DigFragment extends Fragment implements LocationListener{
                 String newTreasure = InventoryService.freshTreasure.getItemType().toUpperCase();
                 youFoundFragment.getTextView().setText(newTreasure);
 
+                bkgButtonFragment.getButton().setVisibility(View.VISIBLE);
                     }
         });
 
