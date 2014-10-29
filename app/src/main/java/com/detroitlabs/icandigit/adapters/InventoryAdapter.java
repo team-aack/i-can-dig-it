@@ -45,7 +45,7 @@ public class InventoryAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = null;
+        View view;
         ViewHolder holder;
 
         if(convertView == null) {
@@ -63,9 +63,8 @@ public class InventoryAdapter extends BaseAdapter {
 
         Treasure treasure = mTreasure.get(position);
         if(treasure != null) {
-            //holder.icon.setImageBitmap(treasure.getIcon());
             holder.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_treasure));
-            holder.multiple.setText("X");
+            holder.multiple.setText("x");
             holder.counter.setText(String.valueOf(treasure.getItemAmount()));
             holder.treasure.setText(treasure.getItemType());
 

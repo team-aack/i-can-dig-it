@@ -21,7 +21,12 @@ public class InventoryFragment extends ListFragment {
         super.onCreate(savedInstanceState);
         getActivity().setTitle(R.string.inventory_title);
         setAdapter();
+    }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getListView().setDivider(null);
     }
 
     private void setAdapter() {
