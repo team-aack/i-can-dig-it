@@ -15,7 +15,10 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
-  <component name="NewModuleRootManager" inherit-compiler-output="false">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/.gradle" />
+    </content>
     <orderEntry type="jdk" jdkName="JDK" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
