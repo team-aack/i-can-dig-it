@@ -43,6 +43,9 @@ public class BkgButtonFragment extends Fragment {
         mButton.setVisibility(View.GONE);
         mButton.setClickable(true);
 
+        mTextView = (TextView) rootView.findViewById(R.id.dialog_text_view);
+
+
         mRelativeLayout = (RelativeLayout) rootView.findViewById(R.id.frag_co);
         mRelativeLayout.setVisibility(View.GONE);
 
