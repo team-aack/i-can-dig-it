@@ -2,6 +2,7 @@ package com.detroitlabs.icandigit.fragments;
 
 import android.app.Dialog;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
@@ -40,12 +41,13 @@ public class DigFragment extends Fragment implements LocationListener{
     private Button digButton;
     private Button inventoryButton;
     Marker littleRedHuman;
+    public static final String LOG_TAG = DigFragment.class.getSimpleName();
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View rootView = inflater.inflate(R.layout.fragment_map, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_map, container, false);
 
         setUpMapIfNeeded();
 
@@ -64,6 +66,23 @@ public class DigFragment extends Fragment implements LocationListener{
             }
         });
 
+        // Create new fragments and transaction
+
+        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        final YouFoundFragment youFoundFragment = new YouFoundFragment();
+        final BkgButtonFragment bkgButtonFragment = new BkgButtonFragment();
+
+        if (fragmentTransaction.isEmpty()) {
+
+
+            // Commit the transaction
+            fragmentTransaction.add(R.id.fragment_container, bkgButtonFragment);
+            Log.v(LOG_TAG, "*********put the YouFoundFragment and BkgButtonFragment at the top");
+            fragmentTransaction.commit();
+            Log.v(LOG_TAG, "********COMMITTING!!");
+
+        }
+
         digButton = (Button) rootView.findViewById(R.id.button_digit);
         digButton.setOnClickListener(new View.OnClickListener()
         {
@@ -77,36 +96,11 @@ public class DigFragment extends Fragment implements LocationListener{
                                 .position(new LatLng(locationManager.getLastKnownLocation(locationProvider).getLatitude(),locationManager.getLastKnownLocation(locationProvider).getLongitude()))
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.your_hole))));
 
-        //This came from Android Developer Docs, but didn't work too well for me.
-//
-//                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//
-//
-//                // Create new fragments and transaction
-//                DugDialogFragment dugDialogFragment = new DugDialogFragment();
-//
-//                // Commit the transaction
-//                fragmentTransaction.add(R.id.fragment_container, dugDialogFragment);
-//                dugDialogFragment.show(fragmentTransaction, "not sure what this should be");
-////                fragmentTransaction.commit();
-
-
-                // Created a new Dialog
-                Dialog dialog = new Dialog(getActivity());
-
-// Set the title
-                dialog.setTitle(R.string.you_found);
-
-// inflate the layout
-                dialog.setContentView(R.layout.dialog_view);
-
-// Set the dialog text -- this is better done in the XML
-                TextView text = (TextView)dialog.findViewById(R.id.dialog_text_view);
-                text.setText(InventoryService.freshTreasure.getItemType() + "!");
-
-// Display the dialog
-                dialog.show();
-            }
+                String freshTreasure = InventoryService.freshTreasure.getItemType().toUpperCase();
+                bkgButtonFragment.getButton().setVisibility(View.VISIBLE);
+                bkgButtonFragment.getRelativeLayout().setVisibility(View.VISIBLE);
+                bkgButtonFragment.getTextView().setText(freshTreasure);
+                    }
         });
 
         return rootView;
