@@ -3,7 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="#4a4a4a"
+    android:background="@color/grey"
     android:layout_height="match_parent">
 
     <ImageView
@@ -11,6 +11,7 @@
         android:background="@drawable/ic_treasure"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="12dp"
         android:gravity="center_vertical" />
 
     <TextView
