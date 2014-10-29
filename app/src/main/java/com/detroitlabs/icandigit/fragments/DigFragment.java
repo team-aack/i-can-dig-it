@@ -97,6 +97,7 @@ public class DigFragment extends Fragment implements LocationListener{
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.your_hole))));
 
                 String newTreasure = InventoryService.freshTreasure.getItemType().toUpperCase();
+                bkgButtonFragment.getButton().setText(newTreasure);
                 bkgButtonFragment.getButton().setVisibility(View.VISIBLE);
                     }
         });
