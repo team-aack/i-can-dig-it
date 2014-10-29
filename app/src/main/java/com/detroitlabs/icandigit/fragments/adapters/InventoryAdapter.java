@@ -63,11 +63,14 @@ public class InventoryAdapter extends BaseAdapter {
         }
 
         Treasure treasure = mTreasure.get(position);
-        //holder.icon.setImageBitmap(treasure.getIcon());
-        holder.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_treasure));
-        holder.multiple.setText("X");
-        holder.counter.setText(treasure.getItemAmount());
-        holder.treasure.setText(treasure.getItemType());
+        if(treasure != null) {
+            //holder.icon.setImageBitmap(treasure.getIcon());
+            holder.icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_treasure));
+            holder.multiple.setText("X");
+            holder.counter.setText(String.valueOf(treasure.getItemAmount()));
+            holder.treasure.setText(treasure.getItemType());
+
+        }
 
         return view;
     }

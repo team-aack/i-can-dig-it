@@ -33,12 +33,15 @@ public class InventoryFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle(R.string.inventory_title);
+        setAdapter();
 
     }
 
     private void setAdapter() {
         mInventoryAdapter = new InventoryAdapter(getActivity(), InventoryService.itemInventory);
         this.setListAdapter(mInventoryAdapter);
+
+
     }
 
 
