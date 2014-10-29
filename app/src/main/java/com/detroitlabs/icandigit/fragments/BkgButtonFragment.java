@@ -44,7 +44,7 @@ public class BkgButtonFragment extends Fragment {
         mButton.setClickable(true);
 
         mRelativeLayout = (RelativeLayout) rootView.findViewById(R.id.frag_co);
-        mRelativeLayout.setVisibility(View.VISIBLE);
+        mRelativeLayout.setVisibility(View.GONE);
 
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
