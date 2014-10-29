@@ -33,6 +33,9 @@ public class YouFoundFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.dialog_view, container, false);
 
+
+
+
         mRelativeLayout = (RelativeLayout) rootView.findViewById(R.id.dialog_relative_layout);
         mRelativeLayout.setVisibility(View.INVISIBLE);
 

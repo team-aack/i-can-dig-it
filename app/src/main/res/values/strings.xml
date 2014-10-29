@@ -26,5 +26,6 @@
     <string name="action_inventory">View Inventory</string>
     <string name="title_activity_inventory">InventoryActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="bkg_button_clicked">The background button was clicked.</string>
 
 </resources>

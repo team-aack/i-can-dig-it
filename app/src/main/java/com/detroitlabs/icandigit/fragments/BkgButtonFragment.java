@@ -3,6 +3,7 @@ package com.detroitlabs.icandigit.fragments;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,8 @@ public class BkgButtonFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mButton.setVisibility(View.GONE);
+                //The following is impossible without access to the youFoundFragment.
+                //We can access youFoundFragment from the DigFragment, since yFF is part of that.
 
 
 //                            fragmentTransaction.detach(youFoundFragment);
