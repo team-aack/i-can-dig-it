@@ -51,7 +51,8 @@ public class DigFragment extends Fragment implements LocationListener{
     private Timer myTimer;
     private final long TIMER_DELAY = 0;
     private final long TIMER_PERIOD = 1000;
-    private ArrayList<Marker> digSiteMarkerList;
+    private final long MARKER_REMOVAL_TIME = 5000;
+    private ArrayList<Marker> listOfDigSiteMarkers;
     public static final String LOG_TAG = DigFragment.class.getSimpleName();
     
     @Override
@@ -118,7 +119,7 @@ public class DigFragment extends Fragment implements LocationListener{
                 digSiteTimeStamp = System.currentTimeMillis(); //current time in milliseconds since midnight UTC on the 1st of January 1970
 
                 listOfDigSites.add(new DigSite(digSiteTimeStamp, digSiteMarker.getPosition().latitude, digSiteMarker.getPosition().longitude));
-                digSiteMarkerList.add(digSiteMarker);
+                listOfDigSiteMarkers.add(digSiteMarker);
 
                 String freshTreasure = InventoryService.freshTreasure.getItemType().toUpperCase();
                 bkgButtonFragment.getButton().setVisibility(View.VISIBLE);
@@ -153,7 +154,7 @@ public class DigFragment extends Fragment implements LocationListener{
                             .position(new LatLng(currentSite.getLat(),currentSite.getLng()))
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.your_hole))); //changes the icon used on this
 
-            digSiteMarkerList.add(mostRecentlyCreatedMarker);
+            listOfDigSiteMarkers.add(mostRecentlyCreatedMarker);
         }
 
         if (treasureJson != "empty") {
@@ -277,6 +278,16 @@ public class DigFragment extends Fragment implements LocationListener{
             //This method runs in the same thread as the UI.
 
             //Do something to the UI thread here
+            //Go through the list of the markers and call that remove on the ones that are too old (5s)
+            for (int i = 0; i < listOfDigSites.size(); ) {
+                if (listOfDigSites.get(i).getTimeStamp() < (System.currentTimeMillis() - MARKER_REMOVAL_TIME)) {
+                    listOfDigSiteMarkers.get(i).remove();
+                    listOfDigSiteMarkers.remove(i);
+                    listOfDigSites.remove(i);
+                } else {
+                    i++;
+                }
+            }
 
         }
     };
