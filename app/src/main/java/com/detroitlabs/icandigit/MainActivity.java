@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -11,6 +12,7 @@ import com.detroitlabs.icandigit.fragments.DigFragment;
 
 public class MainActivity extends Activity {
 
+    public static final String LOG_TAG = "MAIN ACTIVITY";
     DigFragment digFragment;
 
     @Override
@@ -19,6 +21,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+
+        Log.d(LOG_TAG, "***********&*&*&*&&&&&&*******App opened at least");
 
         // Create new fragments and transaction
         digFragment = new DigFragment();

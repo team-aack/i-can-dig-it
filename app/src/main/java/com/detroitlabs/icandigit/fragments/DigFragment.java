@@ -43,7 +43,7 @@ public class DigFragment extends Fragment implements LocationListener{
     private String locationProvider;
     private final int minTime = 1000; //time between userLocation updates in milliseconds
     private final int minDistance = 1; //distance required to move to update userLocation
-    private ArrayList<DigSite> listOfDigSites = new ArrayList<DigSite>();
+    private ArrayList<DigSite> listOfDigSites;
     private Button digButton;
     private Marker littleRedHuman;
     private Marker digSiteMarker;
@@ -59,6 +59,9 @@ public class DigFragment extends Fragment implements LocationListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         final View rootView = inflater.inflate(R.layout.fragment_map, container, false);
+
+        listOfDigSites = new ArrayList<DigSite>();
+        listOfDigSiteMarkers = new ArrayList<Marker>();
 
         myTimer = new Timer();
         myTimer.schedule(new TimerTask() {
