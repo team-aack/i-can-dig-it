@@ -33,6 +33,8 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class DigFragment extends Fragment implements LocationListener{
 
@@ -46,12 +48,24 @@ public class DigFragment extends Fragment implements LocationListener{
     private Marker littleRedHuman;
     private Marker digSiteMarker;
     private long digSiteTimeStamp;
+    private Timer myTimer;
+    private final long TIMER_DELAY = 0;
+    private final long TIMER_PERIOD = 1000;
     public static final String LOG_TAG = DigFragment.class.getSimpleName();
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         final View rootView = inflater.inflate(R.layout.fragment_map, container, false);
+
+        myTimer = new Timer();
+        myTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                TimerMethod();
+            }
+
+        }, TIMER_DELAY, TIMER_PERIOD);
 
         setUpMapIfNeeded();
 
@@ -242,4 +256,27 @@ public class DigFragment extends Fragment implements LocationListener{
     public void onProviderDisabled(String s) {
 
     }
+
+    private void TimerMethod()
+    {
+        //This method is called directly by the timer
+        //and runs in the same thread as the timer.
+
+        //We call the method that will work with the UI
+        //through the runOnUiThread method.
+        getActivity().runOnUiThread(Timer_Tick);
+    }
+
+
+    private Runnable Timer_Tick = new Runnable() {
+        public void run() {
+
+            //This method runs in the same thread as the UI.
+
+            //Do something to the UI thread here
+
+        }
+    };
 }
+
+
