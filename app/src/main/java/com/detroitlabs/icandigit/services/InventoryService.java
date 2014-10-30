@@ -149,4 +149,12 @@ public class InventoryService {
 
         return newThing;
     }
+
+    public static List<Treasure> getItemInventory() {
+        return itemInventory;
+    }
+
+    public static void setItemInventory(List<Treasure> itemInventory) {
+        InventoryService.itemInventory = itemInventory;
+    }
 }
