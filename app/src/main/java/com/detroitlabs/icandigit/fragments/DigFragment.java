@@ -1,6 +1,5 @@
 package com.detroitlabs.icandigit.fragments;
 
-import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -15,10 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.detroitlabs.icandigit.R;
 import com.detroitlabs.icandigit.objects.DigSite;
+import com.detroitlabs.icandigit.objects.Treasure;
 import com.detroitlabs.icandigit.services.InventoryService;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,6 +32,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DigFragment extends Fragment implements LocationListener{
 
@@ -123,16 +123,26 @@ public class DigFragment extends Fragment implements LocationListener{
 
         //retrieves string containing json data from shared preferences and gets object from it
         Gson gson = new Gson();
-        String json = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("listOfDigSites", "empty");
-        if (json != "empty") {
+
+        String digJson = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("listOfDigSites", "empty");
+        String treasureJson = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("listOfTreasures", "empty");
+
+        if (digJson != "empty") {
             Type digSiteType = new TypeToken<ArrayList<DigSite>>(){}.getType();
-            listOfDigSites = gson.fromJson(json, digSiteType);
+            listOfDigSites = gson.fromJson(digJson, digSiteType);
         }
+
         for(DigSite currentSite: listOfDigSites){
             googleMap.addMarker
                     (new MarkerOptions()
                             .position(new LatLng(currentSite.getLat(),currentSite.getLng()))
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.your_hole))); //changes the icon used on this
+        }
+
+        if (treasureJson != "empty") {
+            Type treasureType = new TypeToken<ArrayList<Treasure>>(){}.getType();
+            List<Treasure> treasureList = gson.fromJson(treasureJson, treasureType);
+            InventoryService.setItemInventory(treasureList);
         }
     }
 
@@ -142,11 +152,20 @@ public class DigFragment extends Fragment implements LocationListener{
         /* Disable the my-userLocation layer (this causes our LocationSource to be automatically deactivated.) */
         googleMap.setMyLocationEnabled(false);
         locationManager.removeUpdates(this);
+
         Gson gson = new Gson();
-        String json = gson.toJson(listOfDigSites);
+
+        String digJson = gson.toJson(listOfDigSites);
+        String treasureJson = gson.toJson(InventoryService.getItemInventory());
+
         PreferenceManager.getDefaultSharedPreferences(getActivity())
                 .edit()
-                .putString("listOfDigSites", json)
+                .putString("listOfDigSites", digJson)
+                .commit();
+
+        PreferenceManager.getDefaultSharedPreferences(getActivity())
+                .edit()
+                .putString("listOfTreasures", treasureJson)
                 .commit();
     }
 
