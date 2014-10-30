@@ -33,6 +33,8 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class DigFragment extends Fragment implements LocationListener{
 
@@ -41,17 +43,34 @@ public class DigFragment extends Fragment implements LocationListener{
     private String locationProvider;
     private final int minTime = 1000; //time between userLocation updates in milliseconds
     private final int minDistance = 1; //distance required to move to update userLocation
-    private ArrayList<DigSite> listOfDigSites = new ArrayList<DigSite>();
+    private ArrayList<DigSite> listOfDigSites;
     private Button digButton;
     private Marker littleRedHuman;
     private Marker digSiteMarker;
     private long digSiteTimeStamp;
+    private Timer myTimer;
+    private final long TIMER_DELAY = 0;
+    private final long TIMER_PERIOD = 1000;
+    private final long MARKER_REMOVAL_TIME = 5000;
+    private ArrayList<Marker> listOfDigSiteMarkers;
     public static final String LOG_TAG = DigFragment.class.getSimpleName();
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         final View rootView = inflater.inflate(R.layout.fragment_map, container, false);
+
+        listOfDigSites = new ArrayList<DigSite>();
+        listOfDigSiteMarkers = new ArrayList<Marker>();
+
+        myTimer = new Timer();
+        myTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                TimerMethod();
+            }
+
+        }, TIMER_DELAY, TIMER_PERIOD);
 
         setUpMapIfNeeded();
 
@@ -72,7 +91,6 @@ public class DigFragment extends Fragment implements LocationListener{
         // Create new fragments and transaction
 
         final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        final YouFoundFragment youFoundFragment = new YouFoundFragment();
         final BkgButtonFragment bkgButtonFragment = new BkgButtonFragment();
 
         if (fragmentTransaction.isEmpty()) {
@@ -94,8 +112,6 @@ public class DigFragment extends Fragment implements LocationListener{
             {
                 InventoryService.startDig();
 
-                digSiteTimeStamp = System.currentTimeMillis(); //current time in milliseconds since midnight UTC on the 1st of January 1970
-
                 //adds a marker (containing a position constructed from a LatLng built from the latitude and longitude of the users last recorded location) to the google map
                 //also stores the marker to digSiteMarker
                 digSiteMarker = googleMap.addMarker
@@ -103,7 +119,10 @@ public class DigFragment extends Fragment implements LocationListener{
                                 .position(new LatLng(locationManager.getLastKnownLocation(locationProvider).getLatitude(),locationManager.getLastKnownLocation(locationProvider).getLongitude()))
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.your_hole))); //changes the icon used on this
 
+                digSiteTimeStamp = System.currentTimeMillis(); //current time in milliseconds since midnight UTC on the 1st of January 1970
+
                 listOfDigSites.add(new DigSite(digSiteTimeStamp, digSiteMarker.getPosition().latitude, digSiteMarker.getPosition().longitude));
+                listOfDigSiteMarkers.add(digSiteMarker);
 
                 String freshTreasure = InventoryService.freshTreasure.getItemType().toUpperCase();
                 bkgButtonFragment.getButton().setVisibility(View.VISIBLE);
@@ -133,10 +152,12 @@ public class DigFragment extends Fragment implements LocationListener{
         }
 
         for(DigSite currentSite: listOfDigSites){
-            googleMap.addMarker
+            Marker mostRecentlyCreatedMarker = googleMap.addMarker
                     (new MarkerOptions()
                             .position(new LatLng(currentSite.getLat(),currentSite.getLng()))
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.your_hole))); //changes the icon used on this
+
+            listOfDigSiteMarkers.add(mostRecentlyCreatedMarker);
         }
 
         if (treasureJson != "empty") {
@@ -167,6 +188,8 @@ public class DigFragment extends Fragment implements LocationListener{
                 .edit()
                 .putString("listOfTreasures", treasureJson)
                 .commit();
+
+        myTimer.cancel();
     }
 
     private void setUpMapIfNeeded() {
@@ -242,4 +265,36 @@ public class DigFragment extends Fragment implements LocationListener{
     public void onProviderDisabled(String s) {
 
     }
+
+    private void TimerMethod()
+    {
+        //This method is called directly by the timer
+        //and runs in the same thread as the timer.
+
+        //We call the method that will work with the UI
+        //through the runOnUiThread method.
+        getActivity().runOnUiThread(Timer_Tick);
+    }
+
+
+    private Runnable Timer_Tick = new Runnable() {
+        public void run() {
+
+            //This method runs in the same thread as the UI.
+
+            //Do something to the UI thread here
+            //Go through the list of the markers and call that remove on the ones that are too old (5s)
+            for (int i = 0; i < listOfDigSites.size(); ) {
+                if (listOfDigSites.get(i).getTimeStamp() < (System.currentTimeMillis() - MARKER_REMOVAL_TIME)) {
+                    listOfDigSiteMarkers.get(i).remove();
+                    listOfDigSiteMarkers.remove(i);
+                    listOfDigSites.remove(i);
+                } else {
+                    i++;
+                }
+            }
+        }
+    };
 }
+
+
