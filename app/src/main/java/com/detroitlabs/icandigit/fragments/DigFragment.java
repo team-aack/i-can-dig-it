@@ -108,8 +108,6 @@ public class DigFragment extends Fragment implements LocationListener{
             {
                 InventoryService.startDig();
 
-                digSiteTimeStamp = System.currentTimeMillis(); //current time in milliseconds since midnight UTC on the 1st of January 1970
-
                 //adds a marker (containing a position constructed from a LatLng built from the latitude and longitude of the users last recorded location) to the google map
                 //also stores the marker to digSiteMarker
                 digSiteMarker = googleMap.addMarker
@@ -117,7 +115,10 @@ public class DigFragment extends Fragment implements LocationListener{
                                 .position(new LatLng(locationManager.getLastKnownLocation(locationProvider).getLatitude(),locationManager.getLastKnownLocation(locationProvider).getLongitude()))
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.your_hole))); //changes the icon used on this
 
+                digSiteTimeStamp = System.currentTimeMillis(); //current time in milliseconds since midnight UTC on the 1st of January 1970
+
                 listOfDigSites.add(new DigSite(digSiteTimeStamp, digSiteMarker.getPosition().latitude, digSiteMarker.getPosition().longitude));
+                digSiteMarkerList.add(digSiteMarker);
 
                 String freshTreasure = InventoryService.freshTreasure.getItemType().toUpperCase();
                 bkgButtonFragment.getButton().setVisibility(View.VISIBLE);
@@ -147,10 +148,12 @@ public class DigFragment extends Fragment implements LocationListener{
         }
 
         for(DigSite currentSite: listOfDigSites){
-            googleMap.addMarker
+            Marker mostRecentlyCreatedMarker = googleMap.addMarker
                     (new MarkerOptions()
                             .position(new LatLng(currentSite.getLat(),currentSite.getLng()))
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.your_hole))); //changes the icon used on this
+
+            digSiteMarkerList.add(mostRecentlyCreatedMarker);
         }
 
         if (treasureJson != "empty") {
