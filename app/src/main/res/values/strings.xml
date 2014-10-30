@@ -4,7 +4,7 @@
     <string name="app_name">I Can Dig It</string>
     <string name="action_settings">Settings</string>
 
-    <string name="you_found">You found:</string>
+    <string name="you_found">"Y O U   F O U N D :"</string>
     <string name="treasure00">Gold</string>
     <string name="treasure01">Silver</string>
     <string name="treasure02">Rock</string>
@@ -26,5 +26,6 @@
     <string name="action_inventory">View Inventory</string>
     <string name="title_activity_inventory">InventoryActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="bkg_button_clicked">The background button was clicked.</string>
 
 </resources>

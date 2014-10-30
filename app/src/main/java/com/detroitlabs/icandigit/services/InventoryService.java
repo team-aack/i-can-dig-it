@@ -91,7 +91,7 @@ public class InventoryService {
             case 54: newThing = new Treasure("Toaster",1); break;
             case 55: newThing = new Treasure("Flask",1); break;
             case 56: newThing = new Treasure("Beaker",1); break;
-            case 57: newThing = new Treasure("Ribuk's Cube",1); break;
+            case 57: newThing = new Treasure("Rubik's Cube",1); break;
             case 58: newThing = new Treasure("Guitar",1); break;
             case 59: newThing = new Treasure("Drum Kit",1); break;
             case 60: newThing = new Treasure("Shovel",1); break;
@@ -99,7 +99,7 @@ public class InventoryService {
             case 62: newThing = new Treasure("Briefcase",1); break;
             case 63: newThing = new Treasure("Salt Shaker",1); break;
             case 64: newThing = new Treasure("American Coney",1); break;
-            case 65: newThing = new Treasure("Laffayete Coney",1); break;
+            case 65: newThing = new Treasure("Lafayette Coney",1); break;
             case 66: newThing = new Treasure("Margarita",1); break;
             case 67: newThing = new Treasure("Sheet Music",1); break;
             case 68: newThing = new Treasure("Zip Drive",1); break;
@@ -133,7 +133,7 @@ public class InventoryService {
             case 96: newThing = new Treasure("iPad",1); break;
             case 97: newThing = new Treasure("Table",1); break;
             case 98: newThing = new Treasure("Slows",1); break;
-            case 99: newThing = new Treasure("Thunderbold Display",1); break;
+            case 99: newThing = new Treasure("Thunderbolt Display",1); break;
         }
 
         // Check if this new thing already exists in the list
@@ -148,5 +148,13 @@ public class InventoryService {
             itemInventory.add(newThing);
 
         return newThing;
+    }
+
+    public static List<Treasure> getItemInventory() {
+        return itemInventory;
+    }
+
+    public static void setItemInventory(List<Treasure> itemInventory) {
+        InventoryService.itemInventory = itemInventory;
     }
 }

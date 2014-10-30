@@ -1,43 +1,39 @@
 package com.detroitlabs.icandigit.fragments;
 
-import android.app.Fragment;
+
+import android.app.ListFragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.detroitlabs.icandigit.R;
-import com.detroitlabs.icandigit.objects.Treasure;
+import com.detroitlabs.icandigit.adapters.InventoryAdapter;
 import com.detroitlabs.icandigit.services.InventoryService;
-
-import java.util.ArrayList;
 
 /**
  * Created by aditishetty on 10/23/14.
  */
-public class InventoryFragment extends Fragment {
+public class InventoryFragment extends ListFragment {
 
-    private ArrayAdapter<Treasure> mTreasureAdapter;
+    InventoryAdapter mInventoryAdapter;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle(R.string.inventory_title);
+        setAdapter();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getListView().setDivider(null);
+    }
 
-        mTreasureAdapter = new ArrayAdapter<Treasure>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, InventoryService.itemInventory);
-        View rootView = inflater.inflate(R.layout.inventory_fragment, container,false);
-        ListView listView = (ListView) rootView.findViewById(R.id.inventory_list);
-        listView.setAdapter(mTreasureAdapter);
+    private void setAdapter() {
+        mInventoryAdapter = new InventoryAdapter(getActivity(), InventoryService.itemInventory);
+        this.setListAdapter(mInventoryAdapter);
 
-        return rootView;
 
-        //return super.onCreateView(inflater, container, savedInstanceState);
     }
 
 

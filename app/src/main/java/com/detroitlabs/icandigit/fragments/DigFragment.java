@@ -1,33 +1,38 @@
 package com.detroitlabs.icandigit.fragments;
 
-import android.app.Dialog;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.detroitlabs.icandigit.R;
+import com.detroitlabs.icandigit.objects.DigSite;
+import com.detroitlabs.icandigit.objects.Treasure;
 import com.detroitlabs.icandigit.services.InventoryService;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DigFragment extends Fragment implements LocationListener{
 
@@ -36,16 +41,17 @@ public class DigFragment extends Fragment implements LocationListener{
     private String locationProvider;
     private final int minTime = 1000; //time between userLocation updates in milliseconds
     private final int minDistance = 1; //distance required to move to update userLocation
-    private ArrayList<Marker> listOfHoleMarkers = new ArrayList<Marker>();
+    private ArrayList<DigSite> listOfDigSites = new ArrayList<DigSite>();
     private Button digButton;
-    private Button inventoryButton;
-    Marker littleRedHuman;
-
-
+    private Marker littleRedHuman;
+    private Marker digSiteMarker;
+    private long digSiteTimeStamp;
+    public static final String LOG_TAG = DigFragment.class.getSimpleName();
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View rootView = inflater.inflate(R.layout.fragment_map, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_map, container, false);
 
         setUpMapIfNeeded();
 
@@ -56,13 +62,29 @@ public class DigFragment extends Fragment implements LocationListener{
 
         locationManager.requestLocationUpdates(locationProvider, minTime, minDistance, this);
 
-
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
                 return true;
             }
         });
+
+        // Create new fragments and transaction
+
+        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        final YouFoundFragment youFoundFragment = new YouFoundFragment();
+        final BkgButtonFragment bkgButtonFragment = new BkgButtonFragment();
+
+        if (fragmentTransaction.isEmpty()) {
+
+
+            // Commit the transaction
+            fragmentTransaction.add(R.id.fragment_container, bkgButtonFragment);
+            Log.v(LOG_TAG, "*********put the YouFoundFragment and BkgButtonFragment at the top");
+            fragmentTransaction.commit();
+            Log.v(LOG_TAG, "********COMMITTING!!");
+
+        }
 
         digButton = (Button) rootView.findViewById(R.id.button_digit);
         digButton.setOnClickListener(new View.OnClickListener()
@@ -72,41 +94,22 @@ public class DigFragment extends Fragment implements LocationListener{
             {
                 InventoryService.startDig();
 
-                listOfHoleMarkers.add(googleMap.addMarker
+                digSiteTimeStamp = System.currentTimeMillis(); //current time in milliseconds since midnight UTC on the 1st of January 1970
+
+                //adds a marker (containing a position constructed from a LatLng built from the latitude and longitude of the users last recorded location) to the google map
+                //also stores the marker to digSiteMarker
+                digSiteMarker = googleMap.addMarker
                         (new MarkerOptions()
                                 .position(new LatLng(locationManager.getLastKnownLocation(locationProvider).getLatitude(),locationManager.getLastKnownLocation(locationProvider).getLongitude()))
-                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.your_hole))));
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.your_hole))); //changes the icon used on this
 
-        //This came from Android Developer Docs, but didn't work too well for me.
-//
-//                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//
-//
-//                // Create new fragments and transaction
-//                DugDialogFragment dugDialogFragment = new DugDialogFragment();
-//
-//                // Commit the transaction
-//                fragmentTransaction.add(R.id.fragment_container, dugDialogFragment);
-//                dugDialogFragment.show(fragmentTransaction, "not sure what this should be");
-////                fragmentTransaction.commit();
+                listOfDigSites.add(new DigSite(digSiteTimeStamp, digSiteMarker.getPosition().latitude, digSiteMarker.getPosition().longitude));
 
-
-                // Created a new Dialog
-                Dialog dialog = new Dialog(getActivity());
-
-// Set the title
-                dialog.setTitle(R.string.you_found);
-
-// inflate the layout
-                dialog.setContentView(R.layout.dialog_view);
-
-// Set the dialog text -- this is better done in the XML
-                TextView text = (TextView)dialog.findViewById(R.id.dialog_text_view);
-                text.setText(InventoryService.freshTreasure.getItemType() + "!");
-
-// Display the dialog
-                dialog.show();
-            }
+                String freshTreasure = InventoryService.freshTreasure.getItemType().toUpperCase();
+                bkgButtonFragment.getButton().setVisibility(View.VISIBLE);
+                bkgButtonFragment.getRelativeLayout().setVisibility(View.VISIBLE);
+                bkgButtonFragment.getTextView().setText(freshTreasure);
+                    }
         });
 
         return rootView;
@@ -116,8 +119,31 @@ public class DigFragment extends Fragment implements LocationListener{
     public void onResume() {
         super.onResume();
 
-
         locationManager.requestLocationUpdates(locationProvider, minTime, minDistance, this);
+
+        //retrieves string containing json data from shared preferences and gets object from it
+        Gson gson = new Gson();
+
+        String digJson = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("listOfDigSites", "empty");
+        String treasureJson = PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("listOfTreasures", "empty");
+
+        if (digJson != "empty") {
+            Type digSiteType = new TypeToken<ArrayList<DigSite>>(){}.getType();
+            listOfDigSites = gson.fromJson(digJson, digSiteType);
+        }
+
+        for(DigSite currentSite: listOfDigSites){
+            googleMap.addMarker
+                    (new MarkerOptions()
+                            .position(new LatLng(currentSite.getLat(),currentSite.getLng()))
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.your_hole))); //changes the icon used on this
+        }
+
+        if (treasureJson != "empty") {
+            Type treasureType = new TypeToken<ArrayList<Treasure>>(){}.getType();
+            List<Treasure> treasureList = gson.fromJson(treasureJson, treasureType);
+            InventoryService.setItemInventory(treasureList);
+        }
     }
 
     @Override
@@ -126,6 +152,21 @@ public class DigFragment extends Fragment implements LocationListener{
         /* Disable the my-userLocation layer (this causes our LocationSource to be automatically deactivated.) */
         googleMap.setMyLocationEnabled(false);
         locationManager.removeUpdates(this);
+
+        Gson gson = new Gson();
+
+        String digJson = gson.toJson(listOfDigSites);
+        String treasureJson = gson.toJson(InventoryService.getItemInventory());
+
+        PreferenceManager.getDefaultSharedPreferences(getActivity())
+                .edit()
+                .putString("listOfDigSites", digJson)
+                .commit();
+
+        PreferenceManager.getDefaultSharedPreferences(getActivity())
+                .edit()
+                .putString("listOfTreasures", treasureJson)
+                .commit();
     }
 
     private void setUpMapIfNeeded() {
@@ -139,28 +180,6 @@ public class DigFragment extends Fragment implements LocationListener{
             }
         }
 
-    }
-
-    private void centerMapOnMyLocation() {
-
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-
-        Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
-        if (location != null)
-        {
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                    new LatLng(location.getLatitude(), location.getLongitude()), (float)18.5));
-
-            CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to userLocation user
-                    .zoom(18)                  // Sets the zoom
-                    .bearing(0)                // Sets the orientation of the camera to east
-                    .tilt(0)                  // Sets the tilt of the camera to 30 degrees
-                    .build();                  // Creates a CameraPosition from the builder
-            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-        }
     }
 
     private void initializeLocationManager() {
@@ -205,7 +224,7 @@ public class DigFragment extends Fragment implements LocationListener{
 
         littleRedHuman = (googleMap.addMarker
                 (new MarkerOptions()
-                        .position(new LatLng(locationManager.getLastKnownLocation(locationProvider).getLatitude(),locationManager.getLastKnownLocation(locationProvider).getLongitude()))
+                        .position(new LatLng(locationManager.getLastKnownLocation(locationProvider).getLatitude(), locationManager.getLastKnownLocation(locationProvider).getLongitude()))
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.your_location))));
     }
 
