@@ -51,6 +51,7 @@ public class DigFragment extends Fragment implements LocationListener{
     private Timer myTimer;
     private final long TIMER_DELAY = 0;
     private final long TIMER_PERIOD = 1000;
+    private ArrayList<Marker> digSiteMarkerList;
     public static final String LOG_TAG = DigFragment.class.getSimpleName();
     
     @Override
@@ -86,7 +87,6 @@ public class DigFragment extends Fragment implements LocationListener{
         // Create new fragments and transaction
 
         final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        final YouFoundFragment youFoundFragment = new YouFoundFragment();
         final BkgButtonFragment bkgButtonFragment = new BkgButtonFragment();
 
         if (fragmentTransaction.isEmpty()) {
