@@ -188,6 +188,8 @@ public class DigFragment extends Fragment implements LocationListener{
                 .edit()
                 .putString("listOfTreasures", treasureJson)
                 .commit();
+
+        myTimer.cancel();
     }
 
     private void setUpMapIfNeeded() {
@@ -291,7 +293,6 @@ public class DigFragment extends Fragment implements LocationListener{
                     i++;
                 }
             }
-
         }
     };
 }
